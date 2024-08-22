@@ -1,0 +1,21 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <title> SY Task </title>
+</head>
+<body>
+    <br>
+        {{main}}
+    </br>
+    <br></br>
+    <form action='.' method='POST'> {% csrf_token %}
+        <input type='text' name='title' placeholder='Your command'>
+        <input type='submit' value='Save' />
+    </form>
+    <br></br>
+    <p>
+        {{sentence}}
+    </p>
+
+</body>
+</html>

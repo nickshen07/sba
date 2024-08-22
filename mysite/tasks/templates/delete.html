@@ -1,0 +1,13 @@
+{% extends 'base.html' %}
+
+{% block content %}
+
+<h1> Click the task(s) you want to delete </h1>
+
+    {% for i in all %}
+        <p> <div class="css-1flpyb7-CheckboxRoot-CheckboxRoot e1abaysd0"><div class="css-xf97sy-CheckboxContainer-CheckboxContainer e1yc1h772"><input type="checkbox" readonly="">{{i}}</div></div>
+        </p>
+    {% endfor %}
+
+<button type="submit" class="btn btn-primary">Submit</button>
+{% endblock %}

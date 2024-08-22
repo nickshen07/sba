@@ -1,0 +1,18 @@
+{% extends 'base.html' %}
+
+
+{% block content %}
+
+    <h1>Tasks</h1>
+
+{% for item in nw %}
+    <strong>{{item.name}}</strong>
+    <ul>
+    <li>Label: {{item.label}}</li>
+    <li>Status: {{item.status}}</li>
+    <li>Deadline: {{item.deadline}}</li>
+    </ul>
+
+{% endfor %}
+
+{% endblock %}
