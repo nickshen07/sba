@@ -1,0 +1,14 @@
+{% extends 'base.html' %}
+
+{% block content %}
+
+    <h1> Add Tasks! </h1>
+    <br/><br/><br/>
+    <form method="POST" action="{% url 'query' %}">
+      {% csrf_token %}
+        <div class="mb-3">
+          <input type="text" class="form-control" name="name" placeholder="Enter raw SQL query">
+        </div>
+        <button type="submit" class="btn btn-primary">Submit</button>
+      </form>
+{% endblock %}

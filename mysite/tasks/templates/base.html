@@ -26,9 +26,6 @@
               <li class="nav-item">
                 <a class="nav-link active" aria-current="page" href="{% url 'add' %}">Add Task</a>
               </li>
-              <li class="nav-item">
-                <a class="nav-link active" aria-current="page" href="polls">Poll</a>
-              </li>
               <li class="nav-item dropdown">
                 <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
                   Modify
@@ -37,6 +34,9 @@
                   <li><a class="dropdown-item" href="change">Change tasks</a></li>
                   <li><a class="dropdown-item" href="delete">Delete tasks</a></li>
                 </ul>
+              </li>
+              <li class="nav-item">
+                <a class="nav-link active" aria-current="page" href="{% url 'query' %}">Query</a>
               </li>
             </ul>
             <form class="d-flex" role="search">

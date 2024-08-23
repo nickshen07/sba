@@ -6,9 +6,9 @@
     <br/><br/><br/>
     <form method="POST" action="{% url 'add' %}">
       {% csrf_token %}
-      
+      <div class="card">
         <div class="mb-3">
-          <input type="text" class="form-control" name="name" placeholder="Enter a task name with length less than 256">
+          <input type="text" class="form-control" name="title" placeholder="Enter a task name with length less than 256">
         </div>
 
         <div class="mb-3">
@@ -27,4 +27,5 @@
 
         <button type="submit" class="btn btn-primary">Submit</button>
       </form>
+    </div>
 {% endblock %}

@@ -6,12 +6,19 @@
     <h1>Tasks</h1>
 
 {% for item in nw %}
-    <strong>{{item.name}}</strong>
-    <ul>
-    <li>Label: {{item.label}}</li>
-    <li>Status: {{item.status}}</li>
-    <li>Deadline: {{item.deadline}}</li>
-    </ul>
+    <div class="card text-center">
+        <div class="card-header">
+        {{item.name}}
+        </div>
+        <div class="card-body">
+        <h5 class="card-title">Label: {{item.label}}</h5>
+        <p class="card-text">Status: {{item.status}}</p>
+        <a href="#" class="btn btn-primary">Go somewhere</a>
+        </div>
+        <div class="card-footer text-body-secondary">
+            Deadline: {{item.deadline}}
+        </div>
+    </div>
 
 {% endfor %}
 

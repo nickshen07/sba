@@ -30,7 +30,7 @@ def home(request):
         """
         CREATE TABLE IF NOT EXISTS Task (
             taskid INTEGER PRIMARY KEY AUTOINCREMENT,
-            name varchar(255),
+            title varchar(255) DEFAULT 'No-title' NOT NULL,
             label varchar(255),
             status BOOLEAN DEFAULT false,
             deadline DATETIME
@@ -49,10 +49,10 @@ def home(request):
 def add(request):
     if request.method == "POST":
         p = request.POST
-        l = [p['name'], p['label'], (True if 'status' in p else False), p['deadline']]
+        l = [p['title'], p['label'], (True if 'status' in p else False), p['deadline']]
         with sqlite3.connect("tasks.db") as con:
             cur = con.cursor()
-            s = f"INSERT INTO Task (name, label, status, deadline) VALUES ('{l[0]}', '{l[1]}', {l[2]}, '{l[3]}')"
+            s = f"INSERT INTO Task (title, label, status, deadline) VALUES ('{l[0]}', '{l[1]}', {l[2]}, '{l[3]}')"
             print(s)
             cur.execute(s)
             con.commit()
@@ -70,7 +70,7 @@ def delete(request):
         """
         CREATE TABLE IF NOT EXISTS Task (
             taskid INTEGER PRIMARY KEY AUTOINCREMENT,
-            name varchar(255),
+            title varchar(255) DEFAULT 'No-title' NOT NULL,
             label varchar(255),
             status BOOLEAN DEFAULT false,
             deadline DATETIME
@@ -84,3 +84,16 @@ def delete(request):
         return render(request, 'delete.html', {'all': res})
     else:
         return render(request, 'delete.html', {'all': res})
+    
+def query(request):
+    if request.method == "POST":
+        p = request.POST
+        l = p['name']
+        with sqlite3.connect("tasks.db") as con:
+            cur = con.cursor()
+            print(l)
+            cur.execute(l)
+            con.commit()
+        return render(request, 'query.html', {})
+    else:
+        return render(request, 'query.html', {})
