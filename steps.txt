@@ -1,6 +1,7 @@
 # remove old env
 # create .gitignore file for python
 python -m venv env
+activate env
 python -m pip install django
 python -m pip install pymysql
 python -m pip install mysql-connector-python-rf

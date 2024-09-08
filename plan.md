@@ -20,3 +20,4 @@ Plugins
 Reminder
     double confirm when deleting previous tasks
     add navigation bar
+    not allow to add invalid tasks
