@@ -7,4 +7,5 @@ urlpatterns = [
     path('add', views.add, name="add"),
     path('delete', views.delete, name="delete"),
     path('query', views.query, name="query"),
+    path('hkoi', views.hkoi, name="hkoi")
 ]

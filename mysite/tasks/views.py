@@ -63,6 +63,9 @@ def add(request):
 def redir(request):
     return redirect('http://127.0.0.1:8000/home')
 
+def hkoi(request):
+    return render(request, 'hkoi.html', {})
+
 def delete(request):
     with sqlite3.connect("tasks.db") as con:
         cur = con.cursor()
