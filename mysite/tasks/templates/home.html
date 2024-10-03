@@ -3,23 +3,26 @@
 
 {% block content %}
 
-    <h1>Tasks</h1>
+<h1>Tasks</h1>
 
 {% for item in nw %}
-    <div class="card text-center">
-        <div class="card-header">
-        Name: {{item.name}}
-        </div>
-        <div class="card-body">
-        <h5 class="card-title">Label: {{item.label}}</h5>
-        <p class="card-text">Status: {{item.status}}</p>
-        <a href="#" class="btn btn-primary">Go somewhere</a>
-        </div>
-        <div class="card-footer text-body-secondary">
-            Deadline: {{item.deadline}}
-        </div>
+
+<div class="card text-center">
+    <div class="card-header">
+        <h3 class="card-title">Name: {{item.name}}</h3>
     </div>
+    <div class="card-body">
+        <h5 class="card-text">Label: {{item.label}}</h5>
+        <h5 class="card-text">Status: {{item.status}}</h5>
+        <a href="#" class="btn btn-primary">Go somewhere</a>
+    </div>
+    <div class="card-footer text-body-secondary">
+        <h4 class="card-title">Deadline: {{item.deadline}}</h4>
+    </div>
+</div>
+<br /><br />
 
 {% endfor %}
+
 
 {% endblock %}

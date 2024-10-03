@@ -8,7 +8,8 @@
   <meta property="og:type" content="article">
   <meta property="og:site_name" content="NS Task Manager">
   <meta name="theme-color" content="#008080">
-  <link rel="icon" sizes="192x192" href="../assets/logo.png">
+  <link rel="icon" sizes="192x192"
+    href="https://cdn.discordapp.com/attachments/1291342632076709941/1291390380385894484/logo.png?ex=66ffec83&is=66fe9b03&hm=ea55ed08a9a28d82bcc1fee4f47e74c2921cd2e497ea56246325335944bdbb71&">
   <style>
     /* latin */
     @font-face {
@@ -1544,7 +1545,7 @@
     #page {
       max-width: 1200px;
       margin: 0 auto;
-      background: url("../assets/logo.png") #eaf5ef
+      background: url("https://cdn.discordapp.com/attachments/1291342632076709941/1291390380385894484/logo.png?ex=66ffec83&is=66fe9b03&hm=ea55ed08a9a28d82bcc1fee4f47e74c2921cd2e497ea56246325335944bdbb71&") #eaf5ef
     }
 
     #topbar {
@@ -1593,7 +1594,7 @@
     .site-header a .header-logo {
       flex: .5 0 15px;
       height: 30px;
-      text-align: left
+      text-align: left;
     }
 
     .site-header a .header-logo img {
@@ -1627,7 +1628,7 @@
     }
 
     .site-header a .title-english {
-      font-size: 17px
+      font-size: 25px
     }
 
     @media only screen and (max-width : 600px) {
@@ -1805,9 +1806,9 @@
 
     #nav-dropdown-container #nav-dropdown a .nav-logo,
     #nav-dropdown-container .nav-dropdown-data a .nav-logo {
-      flex: 0 0 50px;
+      flex: 0 0 25px;
       height: 25px;
-      background-image: url("../assets/logo.png");
+      background-image: url("https://cdn.discordapp.com/attachments/1291342632076709941/1291390380385894484/logo.png?ex=66ffec83&is=66fe9b03&hm=ea55ed08a9a28d82bcc1fee4f47e74c2921cd2e497ea56246325335944bdbb71&");
       background-size: 25px;
       margin: 2px 0 0 -6px
     }
@@ -1818,21 +1819,6 @@
       #nav-dropdown-container .nav-dropdown-data a .nav-logo {
         margin: -2px 0 -2px -6px
       }
-    }
-
-    #nav-dropdown-container #nav-dropdown a .nav-logo-hkgoi,
-    #nav-dropdown-container .nav-dropdown-data a .nav-logo-hkgoi {
-      background-position-y: -25px
-    }
-
-    #nav-dropdown-container #nav-dropdown a .nav-logo-sdic,
-    #nav-dropdown-container .nav-dropdown-data a .nav-logo-sdic {
-      background-position-y: -50px
-    }
-
-    #nav-dropdown-container #nav-dropdown a .nav-logo-noip,
-    #nav-dropdown-container .nav-dropdown-data a .nav-logo-noip {
-      background-position-y: -75px
     }
 
     #nav-dropdown-container #nav-dropdown {
@@ -2552,23 +2538,9 @@
   <title>Dashboard &#8211; NS Task Manager</title>
   <link rel='dns-prefetch' href='//s.w.org' />
   <link rel="canonical" href="https://hkoi.org/en/external-competitions/" />
-  <!-- Google Tag Manager -->
-  <script>(function (w, d, s, l, i) {
-      w[l] = w[l] || []; w[l].push({
-        'gtm.start':
-          new Date().getTime(), event: 'gtm.js'
-      }); var f = d.getElementsByTagName(s)[0],
-        j = d.createElement(s), dl = l != 'dataLayer' ? '&l=' + l : ''; j.async = true; j.src =
-          'https://www.googletagmanager.com/gtm.js?id=' + i + dl; f.parentNode.insertBefore(j, f);
-    })(window, document, 'script', 'dataLayer', 'GTM-K7BB663');</script>
-  <!-- End Google Tag Manager -->
 </head>
 
 <body class="page-template-default page page-id-582">
-  <!-- Google Tag Manager (noscript) -->
-  <noscript><iframe src="https://www.googletagmanager.com/ns.html?id=GTM-K7BB663" height="0" width="0"
-      style="display:none;visibility:hidden"></iframe></noscript>
-  <!-- End Google Tag Manager (noscript) -->
   <div id="page" class="hfeed site flow-text">
     <div id="topbar">
       <div class="topbar-flex">
@@ -2576,9 +2548,11 @@
           <header id="masthead" class="site-header center-align" role="banner">
             <a href="/home" rel="home">
               <div class="header-logo">
-                <img src="../assets/logo.png" alt="logo" width="10" height="10">
+                <img
+                  src="https://cdn.discordapp.com/attachments/1291342632076709941/1291390380385894484/logo.png?ex=66ffec83&is=66fe9b03&hm=ea55ed08a9a28d82bcc1fee4f47e74c2921cd2e497ea56246325335944bdbb71&"
+                  alt="logo" width="80" height="80" style="position:absolute;bottom: -5px;">
               </div>
-              <div class="title-text">
+              <div class=" title-text">
                 <span class="title-english">NS Task Manager</span>
               </div>
             </a>
@@ -2588,7 +2562,7 @@
         <div class="topbar-flex-right">
           <div id="nav">
             <div id="nav-menu">
-              <span><a role="button" id="nav-menu-7" class="waves-effect">Tasks</a></span><span><a role="button"
+              <span><a role="button" id="nav-menu-7" class="waves-effect">General</a></span><span><a role="button"
                   id="nav-menu-2726" class="waves-effect">Modify</a></span><span><a role="button" id="nav-menu-9"
                   class="waves-effect">Settings</a></span>
             </div>
@@ -2599,13 +2573,14 @@
                 <div id="nav-dropdown"></div>
                 <div id="nav-next" tabindex="0"></div>
                 <div class="nav-menu-7 nav-dropdown-data raised">
-                  <a href="/home" class="waves-effect"><i class="nav-logo nav-logo-hkoi"></i><span>Home</span></a>
-                  <a href="/add" class="waves-effect"><i class="nav-logo nav-logo-hkoi"></i><span>Add</span></a>
+                  <a href="/home" class="waves-effect"><i class="nav-logo"></i><span>Home</span></a>
+                  <a href="/add" class="waves-effect"><span>Add</span></a>
                 </div>
-                <div class="nav-menu-2726 nav-dropdown-data raised"><a href="/delete" class="waves-effect">Delete</a>
+                <div class="nav-menu-2726 nav-dropdown-data raised">
+                  <a href="/delete" class="waves-effect">Delete</a>
+                  <a href="/change" class="waves-effect">Change</a>
                 </div>
-                <div class="nav-menu-9 nav-dropdown-data raised"><a
-                    href="https://hkoi.org/en/training-team-general-information-2024/" class="waves-effect">Profile</a>
+                <div class="nav-menu-9 nav-dropdown-data raised"><a href="/profile" class="waves-effect">Profile</a>
                 </div>
               </div>
             </div>
@@ -2638,7 +2613,6 @@
           }
         }
       </style>
-      <img src="../assets/logo.png" alt="logo" width="100" height="100" />
       <div id="primary" class="content-area">
         <main id="main" class="site-main" role="main">
           <header class="page-header">
@@ -2747,49 +2721,21 @@
         </div>
         <div class="col m12 l5">
           <div class="site-footer-meta">
-            <div>The Hong Kong Association for Computer Education,<br>Kowloon East P.O. Box 68432</div>
-            <div class="site-footer-copyright">Copyright 2024 HKOI Organizing Committee</div>
+            <div>Shen Lik Hang,<br>Sing Yin Secondary School</div>
+            <div class="site-footer-copyright">Copyright 2024 NS Task Manager</div>
           </div>
         </div>
       </div>
     </footer><!-- #colophon -->
   </div><!-- #page -->
-
-  <script type='text/javascript' src='https://hkoi.org/wp-content/themes/hkoi/js/navigation.js?ver=4.9.7'></script>
-  <script type='text/javascript' src='https://hkoi.org/wp-includes/js/wp-embed.min.js?ver=4.9.7'></script>
-  <script type="text/javascript">
-    (function () {
-      var expirationDate = new Date();
-      expirationDate.setTime(expirationDate.getTime() + 31536000 * 1000);
-      document.cookie = "pll_language=en; expires=" + expirationDate.toUTCString() + "; path=/";
-    }());</script>
   <script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
-  <script type="text/javascript" src="https://hkoi.org/wp-content/themes/hkoi/js/jquery.fancybox.min.js"></script>
+  <script type="text/javascript"
+    src="https://github.com/fancyapps/fancybox/blob/master/dist/jquery.fancybox.min.js"></script>
   <script type="text/javascript" src="https://hkoi.org/wp-content/themes/hkoi/js/bin/materialize2.min.js"></script>
   <script type="text/javascript" src="https://hkoi.org/wp-content/themes/hkoi/js/underscore-min.js"></script>
   <script type="text/javascript" src="https://hkoi.org/wp-content/themes/hkoi/js/backbone-min.js"></script>
   <script type="text/javascript" src="https://hkoi.org/wp-content/themes/hkoi/js/hkoi.js"></script>
-  <!-- <script>
-(function() { var x_lt = '<'; var x_gt = '>'; var x_sp = ' '; var x_eq = '='; var x_cl = ':'; var x_at = '@'; var x_dt = '.'; var x_sl = '/'; var x_qt = '"'; var x_a = 'a'; var x_b = 'b'; var x_c = 'c'; var x_d = 'd'; var x_e = 'e'; var x_f = 'f'; var x_g = 'g'; var x_h = 'h'; var x_i = 'i'; var x_j = 'j'; var x_k = 'k'; var x_l = 'l'; var x_m = 'm'; var x_n = 'n'; var x_o = 'o'; var x_p = 'p'; var x_q = 'q'; var x_r = 'r'; var x_s = 's'; var x_t = 't'; var x_u = 'u'; var x_v = 'v'; var x_w = 'w'; var x_x = 'x'; var x_y = 'y'; var x_z = 'z'; var s = x_lt+x_a+x_sp+x_h+x_r+x_e+x_f+x_eq+x_qt+x_m+x_a+x_i+x_l+x_t+x_o+x_cl+x_i+x_n+x_f+x_o+x_at+x_h+x_k+x_o+x_i+x_dt+x_o+x_r+x_g+x_qt+x_gt+x_i+x_n+x_f+x_o+x_at+x_h+x_k+x_o+x_i+x_dt+x_o+x_r+x_g+x_lt+x_sl+x_a+x_gt; $('.email').html(s); })();
-</script> -->
-  <noscript id="deferred-styles">
-    <link rel="stylesheet" type="text/css" href="//assets.hkoi.org/20170827.css" />
-    <link rel="stylesheet" type="text/css" href="https://hkoi.org/wp-content/themes/hkoi/jquery.fancybox.min.css" />
-    <link rel="stylesheet" type="text/css" href="https://fonts.googleapis.com/css?family=Nunito:400i" />
-  </noscript>
-  <script>
-    var loadDeferredStyles = function () {
-      var addStylesNode = document.getElementById("deferred-styles");
-      var replacement = document.createElement("div");
-      replacement.innerHTML = addStylesNode.textContent;
-      document.body.appendChild(replacement)
-      addStylesNode.parentElement.removeChild(addStylesNode);
-    };
-    var raf = requestAnimationFrame || mozRequestAnimationFrame ||
-      webkitRequestAnimationFrame || msRequestAnimationFrame;
-    if (raf) raf(function () { window.setTimeout(loadDeferredStyles, 0); });
-    else window.addEventListener('load', loadDeferredStyles);
-  </script>
+
 </body>
 
 </html>
