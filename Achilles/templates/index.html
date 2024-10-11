@@ -23,15 +23,28 @@
             <td>
                 <a href="/delete/{{i[0]}}">Delete</a>
                 <br>
-                <a href="">Update</a>
+                <a href="/update/{{i[0]}}">Update</a>
             </td>
         </tr>
         {% endfor %}
     </table>
 
+    <h1>Add Task</h1>
+
     <form action="/" method="POST">
         <input type="text" name="content" id="content">
+        <br />
+        <div>
+            <input type="checkbox" name="status" id="status" />
+            <label for="status">Completed</label>
+        </div>
+        <br />
         <input type="submit" value="Add Task">
+        <br />
+        <br />
     </form>
+
+
+
 </div>
 {% endblock %}

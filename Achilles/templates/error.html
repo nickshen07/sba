@@ -1,0 +1,46 @@
+{% extends 'base.html' %}
+
+{% block head %}
+<title>Achilles</title>
+{% endblock %}
+
+{% block body %}
+
+<style>
+    body {
+        font-family: Arial, sans-serif;
+        text-align: center;
+    }
+
+    h1 {
+        color: red;
+    }
+
+    p {
+        font-size: 18px;
+    }
+
+    #timer {
+        font-size: 24px;
+        font-weight: bold;
+    }
+</style>
+
+<h1>Error</h1>
+<b>{{s}}</b>
+<p>You will be redirected to the homepage in <span id="timer">4</span> seconds.</p>
+
+<script>
+    var timer = 3;
+    var countdown = document.getElementById("timer");
+
+    var interval = setInterval(function () {
+        countdown.textContent = timer--;
+
+        if (timer < 0) {
+            clearInterval(interval);
+            window.location.href = "/";
+        }
+    }, 1000);
+</script>
+{% endblock %}

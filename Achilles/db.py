@@ -11,7 +11,7 @@ def setup():
         CREATE TABLE IF NOT EXISTS Tasks (
             TID INTEGER PRIMARY KEY AUTOINCREMENT,
             Name VARCHAR(40) DEFAULT 'No-Name' NOT NULL,
-            Status BOOLEAN DEFAULT false
+            Status BOOLEAN DEFAULT 0
         )
         """)
         con.commit()
@@ -24,7 +24,7 @@ def reset():
         CREATE TABLE IF NOT EXISTS Tasks (
             TID INTEGER PRIMARY KEY AUTOINCREMENT,
             Name VARCHAR(40) DEFAULT 'No-Name' NOT NULL,
-            Status BOOLEAN DEFAULT false
+            Status BOOLEAN DEFAULT 0
         )
         """)
         con.commit()

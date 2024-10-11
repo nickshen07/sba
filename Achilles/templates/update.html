@@ -1,0 +1,27 @@
+{% extends 'base.html' %}
+
+{% block head %}
+<title>Achilles</title>
+{% endblock %}
+
+{% block body %}
+<div class="content">
+    <h1>update task</h1>
+    <div class="form">
+        <form action="/update/{{item[0]}}" method="POST">
+            <input type="text" name="content" id="content" value="{{item[1]}}">
+            <br />
+            <div>
+                {% if item[2] == 1 %}
+                <input type="checkbox" name="status" id="status" checked />
+                {% else %}
+                <input type="checkbox" name="status" id="status" />
+                {% endif %}
+                <label for="status">Completed</label>
+            </div>
+            <br />
+            <input type="submit" value="Update">
+        </form>
+    </div>
+</div>
+{% endblock %}
