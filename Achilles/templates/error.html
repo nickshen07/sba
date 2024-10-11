@@ -28,10 +28,13 @@
 
 <h1>Error</h1>
 <b>{{s}}</b>
-<p>You will be redirected to the homepage in <span id="timer">4</span> seconds.</p>
+<br />
+{% endfor %}
+
+<p>You will be redirected to the homepage in <span id="timer">7</span> seconds.</p>
 
 <script>
-    var timer = 3;
+    var timer = 6;
     var countdown = document.getElementById("timer");
 
     var interval = setInterval(function () {
