@@ -1,0 +1,1 @@
+install flask, flask_sqlalchemy, mysql, pymysql, mysql-connector
