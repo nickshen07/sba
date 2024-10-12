@@ -10,10 +10,10 @@ import requests
 
 app = Flask(__name__)
 
-# def get_meme():
-#     url = "https://meme-api.com/gimme"
-#     res = json.loads(requests.request("GET", url).text)
-#     return res['url']
+def get_girl():
+    url = "https://meme-api.com/gimme"
+    res = json.loads(requests.request("GET", url).text)
+    return res['url']
 
 @app.route('/', methods=['POST', 'GET'])
 def index():
@@ -34,7 +34,7 @@ def index():
     else:
         uncom = raww("SELECT * FROM Tasks WHERE Status = 0")
         com = raww("SELECT * FROM Tasks WHERE Status = 1")
-        return render_template('index.html', uncom = uncom, com = com)
+        return render_template('index.html', uncom = uncom, com = com, url=get_girl())
 
 @app.route('/delete/<int:id>')
 def delete(id):
