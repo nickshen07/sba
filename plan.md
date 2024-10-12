@@ -25,11 +25,34 @@ Reminder
 ### Achilles
 
 Schema
-    Task (__TID__, Name, Status)
+    Tasks (__TID__, Name, Details, Status, DDate)
+    Tags (__TID__, __Name__)
+    Status (__SID__, Name)
+    TT (__TaskID__, __TagID__)
 
 Table
-    Table Task (
+    Table Tasks (
         TID INTEGER PRIMARY KEY AUTOINCREMENT,
         Name VARCHAR(40) DEFAULT 'No-name' NOT NULL,
-        Status BOOLEAN DEFAULT false
+        Details VARCHAR(40) DEFAULT NULL,
+        SID INTEGER,
+        DDate DATETIME,
+        FOREIGN KEY Status = Status.TID
+    )
+
+    Table Tags (
+        TID INTEGER PRIMARY KEY AUTOINCREMENT,
+        Name VARCHAR(40) PRIMARY KEY NOT NULL
+    )
+
+    Table Status (
+        SID INTEGER PRIMARY KEY AUTOINCREMENT,
+        Name VARCHAR(40) PRIMARY KEY NOT NULL
+    )
+
+    Table TT (
+        TaskID INTEGER,
+        TagID INTEGER,
+        FOREIGN KEY TaskID = Task.TID, TagID = Tags.TID,
+        PRIMARY KEY (TaskID + TagID)
     )

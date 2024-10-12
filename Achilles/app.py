@@ -11,9 +11,9 @@ import requests
 app = Flask(__name__)
 
 def get_girl():
-    url = "https://meme-api.com/gimme"
-    res = json.loads(requests.request("GET", url).text)
-    return res['url']
+    res = requests.get(url="https://api.otakugifs.xyz/gif?reaction=airkiss&format=gif")
+    data = res.json()
+    return data['url']
 
 @app.route('/', methods=['POST', 'GET'])
 def index():
