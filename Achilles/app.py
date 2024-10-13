@@ -43,14 +43,16 @@ def index():
     else:
         setup()
         init()
-        uncom = raww("SELECT * FROM Tasks WHERE SID <> 3")
+        uncom = raww("SELECT * FROM Tasks WHERE SID = 1")
+        doing = raww("SELECT * FROM Tasks WHERE SID = 2")
         com = raww("SELECT * FROM Tasks WHERE SID = 3")
+        idk = raww("SELECT * FROM Tasks WHERE SID = 4")
         tags = raww("SELECT * FROM Tags")
         status = raww("SELECT * FROM Status")
         tt = raww("SELECT * FROM TT")
         with open("reset.txt", 'r') as f:
             last = f.read()
-        return render_template('index.html', uncom = uncom, com = com, url=get_girl(), tags=tags, status=status, last=last, tt=tt)
+        return render_template('index.html', uncom = uncom, doing=doing, com = com, idk=idk, url=get_girl(), tags=tags, status=status, last=last, tt=tt)
 
 @app.route('/delete/<int:id>')
 def delete(id):

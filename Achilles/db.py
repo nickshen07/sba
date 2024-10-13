@@ -83,7 +83,7 @@ def ins(a, b):
 def init():
     with sqlite3.connect("info.db") as con:
         cur = con.cursor()
-        lt = ["Not completed", "On-going", "Completed", "I do not know"]
+        lt = ["Not started", "On-going", "Completed", "I do not know"]
         for i in lt:
             cur.execute(ins(i, "Status"))
         lt = ["School", "Home"]

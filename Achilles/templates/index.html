@@ -5,9 +5,10 @@
 {% endblock %}
 
 {% block body %}
-<div class="content pt-5">
 
-    <h1>On-going Tasks</h1>
+<div class="content pt-5">
+    {% if uncom != [] %}
+    <h1>Not Started Tasks</h1>
     <div class="card">
         <table>
             <tr>
@@ -44,7 +45,49 @@
             {% endfor %}
         </table>
     </div>
-
+    {% endif %}
+    <br />
+    {% if doing != [] %}
+    <h1>On-going Tasks</h1>
+    <div class="card">
+        <table>
+            <tr>
+                <th>id</th>
+                <th>Task</th>
+                <th>Details</th>
+                <th>Tags</th>
+                <th>SID</th>
+                <th>Due Date</th>
+                <th>Actions</th>
+            </tr>
+            {% for i in doing %}
+            <tr>
+                <td>{{i[0]}}</td>
+                <td>{{i[1]}}</td>
+                <td>{{i[2]}}</td>
+                <td>
+                    <div class="container">
+                        {% for j in tt%}
+                        {% if i[0] ==j[0]%}
+                        <button type="button" class="btn btn-success">{{tags[j[1]-1][1]}}</button>
+                        {% endif %}
+                        {% endfor %}
+                    </div>
+                </td>
+                <td>{{i[3]}}</td>
+                <td>{{i[4]}}</td>
+                <td>
+                    <a href="/delete/{{i[0]}}">Delete</a>
+                    <br>
+                    <a href="/update/{{i[0]}}">Update</a>
+                </td>
+            </tr>
+            {% endfor %}
+        </table>
+    </div>
+    {% endif %}
+    <br />
+    {% if com != [] %}
     <h1>Completed Tasks</h1>
     <div class="card">
         <table>
@@ -82,9 +125,50 @@
             {% endfor %}
         </table>
     </div>
+    {% endif %}
     <br />
-    <h3>Add Task</h3>
+    {% if idk != [] %}
+    <h1>I don't know tasks</h1>
     <div class="card">
+        <table>
+            <tr>
+                <th>id</th>
+                <th>Task</th>
+                <th>Details</th>
+                <th>Tags</th>
+                <th>SID</th>
+                <th>Due Date</th>
+                <th>Actions</th>
+            </tr>
+            {% for i in idk %}
+            <tr>
+                <td>{{i[0]}}</td>
+                <td>{{i[1]}}</td>
+                <td>{{i[2]}}</td>
+                <td>
+                    <div class="container">
+                        {% for j in tt%}
+                        {% if i[0] ==j[0]%}
+                        <button type="button" class="btn btn-success">{{tags[j[1]-1][1]}}</button>
+                        {% endif %}
+                        {% endfor %}
+                    </div>
+                </td>
+                <td>{{i[3]}}</td>
+                <td>{{i[4]}}</td>
+                <td>
+                    <a href="/delete/{{i[0]}}">Delete</a>
+                    <br>
+                    <a href="/update/{{i[0]}}">Update</a>
+                </td>
+            </tr>
+            {% endfor %}
+        </table>
+    </div>
+    {% endif %}
+    <br />
+    <h2>Add Task</h2>
+    <div class="card g-4">
         <form action="/" method="POST">
             <h4>Name</h4>
             <input type="text" name="con" id="content">
@@ -97,7 +181,7 @@
                 {% for tag in tags %}
                 <input type="checkbox" class="btn-check" name="tag{{tag[0]}}" value="{{tag[0]}}" id="btncheck{{tag[0]}}"
                     autocomplete="off">
-                <label class="btn btn-outline-primary" for="btncheck{{tag[0]}}">{{tag[1]}}</label>
+                <label class="btn btn-outline-info" for="btncheck{{tag[0]}}">{{tag[1]}}</label>
                 {% endfor %}
             </div>
             <h4>Status</h4>

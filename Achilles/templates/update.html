@@ -25,16 +25,18 @@
                 <input type="checkbox" class="btn-check" name="tag{{tag[0]}}" value="{{tag[0]}}" id="btncheck{{tag[0]}}"
                     autocomplete="off">
                 {% endif %}
-                <label class="btn btn-outline-primary" for="btncheck{{tag[0]}}">{{tag[1]}}</label>
+                <label class="btn btn-outline-info" for="btncheck{{tag[0]}}">{{tag[1]}}</label>
                 {% endfor %}
             </div>
             <h4>Status</h4>
             <div class="btn-group" role="group" aria-label="Basic radio toggle button group">
                 {% for i in status %}
                 {% if i[0] == item[3] %}
-                <input type="radio" class="btn-check" name="opt" id="status{{i[0]}}" value="{{i[0]}}" checked>
+                <input type="radio" class="btn-check" name="opt" id="status{{i[0]}}" value="{{i[0]}}" autocomplete="off"
+                    checked>
                 {% else %}
-                <input type="radio" class="btn-check" name="opt" id="status{{i[0]}}" value="{{i[0]}}">
+                <input type="radio" class="btn-check" name="opt" id="status{{i[0]}}" value="{{i[0]}}"
+                    autocomplete="off">
                 {% endif %}
                 <label class="btn btn-outline-primary" for="status{{i[0]}}">{{i[1]}}</label>
                 <br />
