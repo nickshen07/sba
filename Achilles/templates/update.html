@@ -5,20 +5,44 @@
 {% endblock %}
 
 {% block body %}
-<div class="content">
+<div class="content pt-5">
     <h1>Update Task</h1>
-    <div class="form">
+    <div class="card">
         <form action="/update/{{item[0]}}" method="POST">
-            <input type="text" name="content" id="content" value="{{item[1]}}">
+            <h4>Name</h4>
+            <input type="text" name="con" id="con" value="{{item[1]}}">
             <br />
-            <div>
-                {% if item[2] == 1 %}
-                <input type="checkbox" name="status" id="status" checked />
+            <h4>Details</h4>
+            <input type="text" name="det" id="det" value="{{item[2]}}">
+            <br />
+            <h4>Tags</h4>
+            <div class="btn-group" role="group" aria-label="Basic checkbox toggle button group">
+                {% for tag in tags %}
+                {% if (item[0],tag[0]) in tt %}
+                <input type="checkbox" class="btn-check" name="tag{{tag[0]}}" value="{{tag[0]}}" id="btncheck{{tag[0]}}"
+                    autocomplete="off" checked>
                 {% else %}
-                <input type="checkbox" name="status" id="status" />
+                <input type="checkbox" class="btn-check" name="tag{{tag[0]}}" value="{{tag[0]}}" id="btncheck{{tag[0]}}"
+                    autocomplete="off">
                 {% endif %}
-                <label for="status">Completed</label>
+                <label class="btn btn-outline-primary" for="btncheck{{tag[0]}}">{{tag[1]}}</label>
+                {% endfor %}
             </div>
+            <h4>Status</h4>
+            <div class="btn-group" role="group" aria-label="Basic radio toggle button group">
+                {% for i in status %}
+                {% if i[0] == item[3] %}
+                <input type="radio" class="btn-check" name="opt" id="status{{i[0]}}" value="{{i[0]}}" checked>
+                {% else %}
+                <input type="radio" class="btn-check" name="opt" id="status{{i[0]}}" value="{{i[0]}}">
+                {% endif %}
+                <label class="btn btn-outline-primary" for="status{{i[0]}}">{{i[1]}}</label>
+                <br />
+                {% endfor %}
+            </div>
+            <h4>Due date</h4>
+            <input type="datetime-local" name="date" id="deadline">
+            <br />
             <br />
             <input type="submit" value="Update">
         </form>
