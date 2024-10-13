@@ -4,26 +4,59 @@ import mysql.connector
 # con = sqlite3.connect("info.db")
 # cur = con.cursor()
 
-task = """
+tables = ["Tasks", "Tags", "Status", "TT"]
+
+map = {
+"Tasks":"""
 CREATE TABLE IF NOT EXISTS Tasks (
     TID INTEGER PRIMARY KEY AUTOINCREMENT,
-    Name VARCHAR(40) DEFAULT 'No-Name' NOT NULL,
-    Status BOOLEAN DEFAULT 0
+    Name VARCHAR(255) DEFAULT 'No-Name' NOT NULL,
+    Details VARCHAR(255) DEFAULT NULL,
+    SID INTEGER DEFAULT 0 NOT NULL,
+    DDate DATETIME,
+    FOREIGN KEY (SID) REFERENCES Status(SID)
+)
+""",
+
+"Tags":"""
+CREATE TABLE IF NOT EXISTS Tags (
+    TID INTEGER PRIMARY KEY AUTOINCREMENT,
+    Name VARCHAR(255) UNIQUE
+)
+""", 
+
+"Status":"""
+CREATE TABLE IF NOT EXISTS Status (
+    SID INTEGER PRIMARY KEY AUTOINCREMENT,
+    Name VARCHAR(255) UNIQUE
+)
+""", 
+
+"TT":"""
+CREATE TABLE IF NOT EXISTS TT (
+    TkID INTEGER,
+    TgID INTEGER,
+    PRIMARY KEY (TkID, TgID),
+    FOREIGN KEY (TkID) REFERENCES Tasks(TID),
+    FOREIGN KEY (TgID) REFERENCES Tags(TID)
 )
 """
+}
 
 def setup():
     with sqlite3.connect("info.db") as con:
         cur = con.cursor()
-        con.execute(task)
+        for i in tables:
+            cur.execute(map[i])
         con.commit()
 
 def reset():
     with sqlite3.connect("info.db") as con:
         cur = con.cursor()
-        cur.execute("DROP TABLE IF EXISTS Tasks")
-        con.execute(task)
+        for i in tables:
+            cur.execute(f"DROP TABLE IF EXISTS {i}")
         con.commit()
+
 
 def raw(query):
     with sqlite3.connect("info.db") as con:
@@ -38,3 +71,21 @@ def raww(query):
         res = res.fetchall()
         con.commit()
     return res
+
+def ins(a, b):
+    q = f"SELECT 1 FROM {b} WHERE EXISTS (SELECT * FROM {b} WHERE Name = '{a}')"
+    t = raww(q)
+    if len(t)==0:
+        q2 = f"INSERT INTO {b} (Name) VALUES ('{a}')"
+        return q2
+    return ""
+
+def init():
+    with sqlite3.connect("info.db") as con:
+        cur = con.cursor()
+        lt = ["Not completed", "On-going", "Completed", "I do not know"]
+        for i in lt:
+            cur.execute(ins(i, "Status"))
+        lt = ["School", "Home"]
+        for i in lt:
+            cur.execute(ins(i, "Tags"))

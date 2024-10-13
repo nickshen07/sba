@@ -25,7 +25,7 @@ Reminder
 ### Achilles
 
 Schema
-    Tasks (__TID__, Name, Details, Status, DDate)
+    Tasks (__TID__, Name, Details, SID, DDate)
     Tags (__TID__, __Name__)
     Status (__SID__, Name)
     TT (__TaskID__, __TagID__)

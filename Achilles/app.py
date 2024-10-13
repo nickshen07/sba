@@ -11,9 +11,7 @@ import requests
 app = Flask(__name__)
 
 def get_girl():
-    res = requests.get(url="https://api.otakugifs.xyz/gif?reaction=airkiss&format=gif")
-    data = res.json()
-    return data['url']
+    return "https://pic.re/image?max_size=1023"
 
 @app.route('/', methods=['POST', 'GET'])
 def index():
@@ -21,20 +19,26 @@ def index():
         if 'reset' in request.form:
             reset()
             return redirect('/')
-        task_content = request.form['content']
-        b = 1 if 'status' in request.form else 0
-        query = f"INSERT INTO Tasks (Name, Status) VALUES ('{task_content}', {b})"
+        print(request.form)
+        con = request.form['con']
+        det = request.form['det']
+        opt = request.form['opt']
+        date = request.form['date']
+        query = f"INSERT INTO Tasks (Name, Details, SID, DDate) VALUES ('{con}', '{det}', {opt}, '{date}')"
         print(query)
         try:
-            setup()
             raw(query)
             return redirect('/')
         except:
             return render_template('error.html', s="invalid input")
     else:
-        uncom = raww("SELECT * FROM Tasks WHERE Status = 0")
-        com = raww("SELECT * FROM Tasks WHERE Status = 1")
-        return render_template('index.html', uncom = uncom, com = com, url=get_girl())
+        setup()
+        init()
+        uncom = raww("SELECT * FROM Tasks WHERE SID <> 2")
+        com = raww("SELECT * FROM Tasks WHERE SID = 2")
+        tags = raww("SELECT * FROM Tags")
+        status = raww("SELECT * FROM Status")
+        return render_template('index.html', uncom = uncom, com = com, url=get_girl(), tags=tags, status=status)
 
 @app.route('/delete/<int:id>')
 def delete(id):
