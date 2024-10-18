@@ -54,7 +54,7 @@ def reset():
     with sqlite3.connect("info.db") as con:
         cur = con.cursor()
         for i in tables:
-            cur.execute(f"DROP TABLE IF EXISTS {i}")
+            cur.execute(f"DROP TABLE IF EXISTS ?",i)
         con.commit()
 
 
@@ -73,11 +73,13 @@ def raww(query):
     return res
 
 def ins(a, b):
-    q = f"SELECT 1 FROM {b} WHERE EXISTS (SELECT * FROM {b} WHERE Name = '{a}')"
-    t = raww(q)
-    if len(t)==0:
-        q2 = f"INSERT INTO {b} (Name) VALUES ('{a}')"
-        return q2
+    with sqlite3.connect("info.db") as con:
+        cur = con.cursor()
+        res = cur.execute("SELECT 1 FROM ? WHERE EXISTS (SELECT * FROM ? WHERE Name = ?)", (b,b,a))
+        t = res.fetchall()
+        if len(t)==0:
+            cur.execute("INSERT INTO ? (Name) VALUES (?)", (b,a))
+        con.commit()
     return ""
 
 def init():
@@ -85,7 +87,7 @@ def init():
         cur = con.cursor()
         lt = ["Not started", "On-going", "Completed", "I do not know"]
         for i in lt:
-            cur.execute(ins(i, "Status"))
+            ins(i, "Status")
         lt = ["School", "Home"]
         for i in lt:
-            cur.execute(ins(i, "Tags"))
+            ins(i, "Tags")

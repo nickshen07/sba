@@ -28,7 +28,7 @@ def index():
         det = request.form['det']
         opt = request.form['opt']
         date = request.form['date']
-        query = f"INSERT INTO Tasks (Name, Details, SID, DDate) VALUES ('{con}', '{det}', {opt}, '{date}')"
+        query = "INSERT INTO Tasks (Name, Details, SID, DDate) VALUES (?, ?, ?, ?)", (con, det, opt, date)
         try:
             raw(query)
             tk = raww("SELECT MAX(TID) FROM Tasks")
@@ -70,14 +70,15 @@ def update(id):
         det = request.form['det']
         opt = request.form['opt']
         date = request.form['date']
-        query = f"UPDATE Tasks SET Name = '{con}', Details = '{det}', SID = {opt}, DDate = '{date}' WHERE TID = {id}"
+        con = sqlite3.connect("demo.db")
+        cur = con.cursor()
         try:
-            raw(query)
-            raw(f"DELETE FROM TT WHERE TkID = {id}")
+            cur.execute("UPDATE Tasks SET Name = ?, Details = ?, SID = ?, DDate = ? WHERE TID = ?", (con, det, opt, date, id))
+            cur.execute(f"DELETE FROM TT WHERE TkID = {id}")
             for i in request.form:
                 if 'tag' in i:
-                    tq = f"INSERT INTO TT (TkID, TgID) VALUES ({id}, {request.form[i]})"
-                    raw(tq)
+                    cur.execute("INSERT INTO TT (TkID, TgID) VALUES (?, ?)",(id, request.form[i]))
+            cur.commit()
             return redirect('/')
         except:
             return "There was an error"
