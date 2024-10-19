@@ -56,3 +56,7 @@ Table
         FOREIGN KEY TaskID = Task.TID, TagID = Tags.TID,
         PRIMARY KEY (TaskID + TagID)
     )
+
+
+MAC: 2C:CF:67:14:6E:B7
+IP: 192.168.31.122
