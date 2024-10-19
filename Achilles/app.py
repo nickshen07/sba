@@ -28,9 +28,11 @@ def index():
         det = request.form['det']
         opt = request.form['opt']
         date = request.form['date']
-        query = "INSERT INTO Tasks (Name, Details, SID, DDate) VALUES (?, ?, ?, ?)", (con, det, opt, date)
         try:
-            raw(query)
+            with sqlite3.connect("info.db") as con:
+                cur = con.cursor()
+                cur.execute("INSERT INTO Tasks (Name, Details, SID, DDate) VALUES (?, ?, ?, ?)", (con, det, opt, date))
+                cur.commit()
             tk = raww("SELECT MAX(TID) FROM Tasks")
             tk = tk[0][0]
             for i in request.form:
@@ -70,15 +72,15 @@ def update(id):
         det = request.form['det']
         opt = request.form['opt']
         date = request.form['date']
-        con = sqlite3.connect("demo.db")
-        cur = con.cursor()
         try:
-            cur.execute("UPDATE Tasks SET Name = ?, Details = ?, SID = ?, DDate = ? WHERE TID = ?", (con, det, opt, date, id))
-            cur.execute(f"DELETE FROM TT WHERE TkID = {id}")
-            for i in request.form:
-                if 'tag' in i:
-                    cur.execute("INSERT INTO TT (TkID, TgID) VALUES (?, ?)",(id, request.form[i]))
-            cur.commit()
+            with sqlite3.connect("info.db") as con:
+                cur = con.cursor()
+                cur.execute("UPDATE Tasks SET Name = ?, Details = ?, SID = ?, DDate = ? WHERE TID = ?", (con, det, opt, date, id))
+                cur.execute("DELETE FROM TT WHERE TkID = ?", (id))
+                for i in request.form:
+                    if 'tag' in i:
+                        cur.execute("INSERT INTO TT (TkID, TgID) VALUES (?, ?)",(id, request.form[i]))
+                cur.commit()
             return redirect('/')
         except:
             return "There was an error"
