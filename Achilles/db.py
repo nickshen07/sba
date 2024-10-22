@@ -72,13 +72,23 @@ def raww(query):
         con.commit()
     return res
 
-def ins(a, b):
+def ins(a):
     with sqlite3.connect("info.db") as con:
         cur = con.cursor()
-        res = cur.execute("SELECT 1 FROM ? WHERE EXISTS (SELECT * FROM ? WHERE Name = ?)", (b,b,a))
+        res = cur.execute("SELECT 1 FROM Status WHERE EXISTS (SELECT * FROM Status WHERE Name = ?)", (a,))
         t = res.fetchall()
         if len(t)==0:
-            cur.execute("INSERT INTO ? (Name) VALUES (?)", (b,a))
+            cur.execute("INSERT INTO Status (Name) VALUES (?)", (a,))
+        con.commit()
+    return ""
+
+def ins2(a):
+    with sqlite3.connect("info.db") as con:
+        cur = con.cursor()
+        res = cur.execute("SELECT 1 FROM Tags WHERE EXISTS (SELECT * FROM Tags WHERE Name = ?)", (a,))
+        t = res.fetchall()
+        if len(t)==0:
+            cur.execute("INSERT INTO Tags (Name) VALUES (?)", (a,))
         con.commit()
     return ""
 
@@ -87,7 +97,7 @@ def init():
         cur = con.cursor()
         lt = ["Not started", "On-going", "Completed", "I do not know"]
         for i in lt:
-            ins(i, "Status")
+            ins(i)
         lt = ["School", "Home"]
         for i in lt:
-            ins(i, "Tags")
+            ins2(i)
