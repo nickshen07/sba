@@ -13,7 +13,7 @@ CREATE TABLE IF NOT EXISTS Tasks (
     Name VARCHAR(255) DEFAULT 'No-Name' NOT NULL,
     Details VARCHAR(255) DEFAULT NULL,
     SID INTEGER DEFAULT 0 NOT NULL,
-    DDate DATETIME,
+    DDate datetime,
     FOREIGN KEY (SID) REFERENCES Status(SID)
 )
 """,
@@ -43,61 +43,53 @@ CREATE TABLE IF NOT EXISTS TT (
 """
 }
 
+con = sqlite3.connect('info.db',
+                             detect_types=sqlite3.PARSE_DECLTYPES |
+                             sqlite3.PARSE_COLNAMES,check_same_thread=False)
+cur = con.cursor()
+
 def setup():
-    with sqlite3.connect("info.db") as con:
-        cur = con.cursor()
-        for i in tables:
-            cur.execute(map[i])
-        con.commit()
+    for i in tables:
+        cur.execute(map[i])
+    con.commit()
 
 def reset():
-    with sqlite3.connect("info.db") as con:
-        cur = con.cursor()
-        for i in tables:
-            cur.execute(f"DROP TABLE IF EXISTS ?",i)
-        con.commit()
+    for i in tables:
+        cur.execute(f"DROP TABLE IF EXISTS {i}")
+    con.commit()
 
 
 def raw(query):
-    with sqlite3.connect("info.db") as con:
-        cur = con.cursor()
-        cur.execute(query)
-        con.commit()
+    cur.execute(query)
+    con.commit()
+
 
 def raww(query):
-    with sqlite3.connect("info.db") as con:
-        cur = con.cursor()
-        res = cur.execute(query)
-        res = res.fetchall()
-        con.commit()
+    res = cur.execute(query)
+    res = res.fetchall()
+    con.commit()
     return res
 
 def ins(a):
-    with sqlite3.connect("info.db") as con:
-        cur = con.cursor()
-        res = cur.execute("SELECT 1 FROM Status WHERE EXISTS (SELECT * FROM Status WHERE Name = ?)", (a,))
-        t = res.fetchall()
-        if len(t)==0:
-            cur.execute("INSERT INTO Status (Name) VALUES (?)", (a,))
-        con.commit()
+    res = cur.execute("SELECT 1 FROM Status WHERE EXISTS (SELECT * FROM Status WHERE Name = ?)", (a,))
+    t = res.fetchall()
+    if len(t)==0:
+        cur.execute("INSERT INTO Status (Name) VALUES (?)", (a,))
+    con.commit()
     return ""
 
 def ins2(a):
-    with sqlite3.connect("info.db") as con:
-        cur = con.cursor()
-        res = cur.execute("SELECT 1 FROM Tags WHERE EXISTS (SELECT * FROM Tags WHERE Name = ?)", (a,))
-        t = res.fetchall()
-        if len(t)==0:
-            cur.execute("INSERT INTO Tags (Name) VALUES (?)", (a,))
-        con.commit()
+    res = cur.execute("SELECT 1 FROM Tags WHERE EXISTS (SELECT * FROM Tags WHERE Name = ?)", (a,))
+    t = res.fetchall()
+    if len(t)==0:
+        cur.execute("INSERT INTO Tags (Name) VALUES (?)", (a,))
+    con.commit()
     return ""
 
 def init():
-    with sqlite3.connect("info.db") as con:
-        cur = con.cursor()
-        lt = ["Not started", "On-going", "Completed", "I do not know"]
-        for i in lt:
-            ins(i)
-        lt = ["School", "Home"]
-        for i in lt:
-            ins2(i)
+    lt = ["Not started", "On-going", "Completed", "I do not know"]
+    for i in lt:
+        ins(i)
+    lt = ["School", "Home"]
+    for i in lt:
+        ins2(i)

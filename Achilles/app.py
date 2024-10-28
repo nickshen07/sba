@@ -12,8 +12,14 @@ import pytz
 
 app = Flask(__name__)
 
-con = sqlite3.connect("demo.db")
+con = sqlite3.connect('info.db',
+                             detect_types=sqlite3.PARSE_DECLTYPES |
+                             sqlite3.PARSE_COLNAMES,check_same_thread=False)
 cur = con.cursor()
+def convert_datetime(val):
+    """Convert ISO 8601 datetime to datetime.datetime object."""
+    return datetime.datetime.fromisoformat(val.decode())
+sqlite3.register_converter("datetime", convert_datetime)
 
 def get_girl():
     return "https://pic.re/image?max_size=1023"
@@ -32,7 +38,7 @@ def index():
         opt = int(request.form['opt'])
         date = request.form['date']
         try:
-            gg = (cont, det, opt, datetime.now().strftime("%Y-%m-%d"))
+            gg = (cont, det, opt, datetime.now().strftime("%Y-%m-%d %H:%M:%S"))
             print(gg)
             cur.execute("INSERT INTO Tasks (Name, Details, SID, DDate) VALUES (?, ?, ?, ?)", gg)
             cur.commit()
@@ -76,16 +82,14 @@ def update(id):
         opt = int(request.form['opt'])
         date = request.form['date']
         try:
-            with sqlite3.connect("info.db") as con:
-                cur = con.cursor()
-                gg = (cont, det, opt, datetime.now().strftime("%Y-%m-%d"))
-                print(gg)
-                cur.execute("UPDATE Tasks SET Name = ?, Details = ?, SID = ?, DDate = ? WHERE TID = ?", gg)
-                cur.execute("DELETE FROM TT WHERE TkID = ?", (id,))
-                for i in request.form:
-                    if 'tag' in i:
-                        cur.execute("INSERT INTO TT (TkID, TgID) VALUES (?, ?)",(id, request.form[i]))
-                cur.commit()
+            gg = (cont, det, opt, datetime.now().strftime("%Y-%m-%d"))
+            print(gg)
+            cur.execute("UPDATE Tasks SET Name = ?, Details = ?, SID = ?, DDate = ? WHERE TID = ?", gg)
+            cur.execute("DELETE FROM TT WHERE TkID = ?", (id,))
+            for i in request.form:
+                if 'tag' in i:
+                    cur.execute("INSERT INTO TT (TkID, TgID) VALUES (?, ?)",(id, request.form[i]))
+            cur.commit()
             return redirect('/')
         except:
             return "There was an error"
