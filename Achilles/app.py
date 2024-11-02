@@ -37,20 +37,20 @@ def index():
         det = request.form['det']
         opt = int(request.form['opt'])
         date = request.form['date']
-        try:
-            gg = (cont, det, opt, datetime.now().strftime("%Y-%m-%d %H:%M:%S"))
-            print(gg)
-            cur.execute("INSERT INTO Tasks (Name, Details, SID, DDate) VALUES (?, ?, ?, ?)", gg)
-            cur.commit()
-            tk = raww("SELECT MAX(TID) FROM Tasks")
-            tk = tk[0][0]
-            for i in request.form:
-                if 'tag' in i:
-                    tq = f"INSERT INTO TT (TkID, TgID) VALUES ({tk}, {request.form[i]})"
-                    raw(tq)
-            return redirect('/')
-        except:
-            return render_template('error.html', s="invalid input")
+        # try:
+        gg = (cont, det, opt)
+        print(gg)
+        cur.execute("INSERT INTO Tasks (Name, Details, SID) VALUES (?, ?, ?)", gg)
+        con.commit()
+        tk = raww("SELECT MAX(TID) FROM Tasks")
+        tk = tk[0][0]
+        for i in request.form:
+            if 'tag' in i:
+                tq = f"INSERT INTO TT (TkID, TgID) VALUES ({tk}, {request.form[i]})"
+                raw(tq)
+        return redirect('/')
+        # except:
+        #     return render_template('error.html', s="invalid input")
     else:
         setup()
         init()
@@ -89,7 +89,7 @@ def update(id):
             for i in request.form:
                 if 'tag' in i:
                     cur.execute("INSERT INTO TT (TkID, TgID) VALUES (?, ?)",(id, request.form[i]))
-            cur.commit()
+            con.commit()
             return redirect('/')
         except:
             return "There was an error"
