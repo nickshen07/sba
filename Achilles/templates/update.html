@@ -7,13 +7,17 @@
 {% block body %}
 <div class="content pt-5">
     <h1>Update Task</h1>
-    <div class="card">
+    <div class="card g-4 ex1">
         <form action="/update/{{item[0]}}" method="POST">
             <h4>Name</h4>
-            <input type="text" name="con" id="con" value="{{item[1]}}">
+            <div>
+                <input type="text" name="con" id="con" value="{{item[1]}}">
+            </div>
             <br />
             <h4>Details</h4>
-            <input type="text" name="det" id="det" value="{{item[2]}}">
+            <div>
+                <input type="text" name="det" id="det" value="{{item[2]}}">
+            </div>
             <br />
             <h4>Tags</h4>
             <div class="btn-group" role="group" aria-label="Basic checkbox toggle button group">
@@ -25,7 +29,7 @@
                 <input type="checkbox" class="btn-check" name="tag{{tag[0]}}" value="{{tag[0]}}" id="btncheck{{tag[0]}}"
                     autocomplete="off">
                 {% endif %}
-                <label class="btn btn-outline-info" for="btncheck{{tag[0]}}">{{tag[1]}}</label>
+                <label class="btn btn-outline-success" for="btncheck{{tag[0]}}">{{tag[1]}}</label>
                 {% endfor %}
             </div>
             <h4>Status</h4>
@@ -46,7 +50,10 @@
             <input type="datetime-local" name="date" value="{{item[4]}}" id="deadline">
             <br />
             <br />
+            <br />
             <input type="submit" value="Update">
+            <br />
+            <br />
         </form>
     </div>
 </div>

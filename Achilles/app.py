@@ -55,7 +55,8 @@ def index():
     else:
         setup()
         init()
-        uncom = raww("SELECT * FROM Tasks WHERE SID = 1")
+        alt = raww(f"SELECT * FROM Tasks WHERE DDate BETWEEN datetime('now', 'localtime') AND datetime('now','+7 day','localtime')")
+        nstart = raww("SELECT * FROM Tasks WHERE SID = 1")
         doing = raww("SELECT * FROM Tasks WHERE SID = 2")
         com = raww("SELECT * FROM Tasks WHERE SID = 3")
         idk = raww("SELECT * FROM Tasks WHERE SID = 4")
@@ -64,7 +65,7 @@ def index():
         tt = raww("SELECT * FROM TT")
         with open("reset.txt", 'r') as f:
             last = f.read()
-        return render_template('index.html', uncom = uncom, doing=doing, com = com, idk=idk, url=get_girl(), tags=tags, status=status, last=last, tt=tt)
+        return render_template('index.html', alt=alt, nstart = nstart, doing=doing, com = com, idk=idk, url=get_girl(), tags=tags, status=status, last=last, tt=tt)
 
 @app.route('/delete/<int:id>')
 def delete(id):
@@ -97,16 +98,15 @@ def update(id):
             con.commit()
             return redirect('/')
         except:
-            return render_template('error.html', s="There was an error  ")
+            return render_template('error.html', s="There was an error")
     else:
         item = raww(f"SELECT * FROM Tasks WHERE TID = {id}")
         status = raww("SELECT * FROM Status")
-        item = item[0]
         tags = raww("SELECT * FROM Tags")
         tt = raww("SELECT * FROM TT")
-        print(item)
         if len(item) == 0:
             return render_template('error.html', s="Task ID invalid")
+        item = item[0]
         return render_template('update.html', item=item, status=status, tags=tags,tt=tt)
 
 @app.errorhandler(HTTPException)

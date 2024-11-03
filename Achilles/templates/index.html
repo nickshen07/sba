@@ -6,9 +6,21 @@
 
 {% block body %}
 
+{% if alt != [] %}
+{% for i in alt %}
+<div class="alert alert-warning alert-dismissible fade show" role="alert">
+    <strong>{{i[1]}} is due this week! [{{i[4]}}]</strong> Please check it.
+    <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+        <span aria-hidden="true">&times;</span>
+    </button>
+</div>
+{% endfor %}
+{% endif %}
+
+
 <div class="content pt-5">
-    {% if uncom != [] %}
-    <h1>Not Started Tasks</h1>
+    {% if nstart != [] %}
+    <h1>Not Started</h1>
     <div class="card">
         <table>
             <tr>
@@ -20,7 +32,7 @@
                 <th>Due Date</th>
                 <th>Actions</th>
             </tr>
-            {% for i in uncom %}
+            {% for i in nstart %}
             <tr>
                 <td>{{i[0]}}</td>
                 <td>{{i[1]}}</td>
@@ -48,7 +60,7 @@
     {% endif %}
     <br />
     {% if doing != [] %}
-    <h1>On-going Tasks</h1>
+    <h1>On-going</h1>
     <div class="card">
         <table>
             <tr>
@@ -88,7 +100,7 @@
     {% endif %}
     <br />
     {% if com != [] %}
-    <h1>Completed Tasks</h1>
+    <h1>Completed</h1>
     <div class="card">
         <table>
             <tr>
@@ -128,7 +140,7 @@
     {% endif %}
     <br />
     {% if idk != [] %}
-    <h1>I don't know tasks</h1>
+    <h1>I don't know</h1>
     <div class="card">
         <table>
             <tr>
@@ -168,22 +180,29 @@
     {% endif %}
     <br />
     <h2>Add Task</h2>
-    <div class="card g-4">
+    <div class="card g-4 ex1">
         <form action="/" method="POST">
             <h4>Name</h4>
-            <input type="text" name="con" id="content">
+            <div>
+                <input type="text" name="con" id="content">
+            </div><br />
             <br />
             <h4>Details</h4>
-            <input type="text" name="det" id="det">
+            <div>
+                <input type="text" name="det" id="det">
+            </div>
+            <br />
             <br />
             <h4>Tags</h4>
             <div class="btn-group" role="group" aria-label="Basic checkbox toggle button group">
                 {% for tag in tags %}
-                <input type="checkbox" class="btn-check btn-success" name="tag{{tag[0]}}" value="{{tag[0]}}"
-                    id="btncheck{{tag[0]}}" autocomplete="off">
-                <label class="btn btn-outline-info" for="btncheck{{tag[0]}}">{{tag[1]}}</label>
+                <input type="checkbox" class="btn-check" name="tag{{tag[0]}}" value="{{tag[0]}}" id="btncheck{{tag[0]}}"
+                    autocomplete="off">
+                <label class="btn btn-outline-success" for="btncheck{{tag[0]}}">{{tag[1]}}</label>
                 {% endfor %}
             </div>
+            <br />
+            <br />
             <h4>Status</h4>
             <div class="btn-group" role="group" aria-label="Basic radio toggle button group">
                 {% for i in status %}
@@ -199,8 +218,11 @@
                 {% endfor %}
             </div>
             <br />
+            <br />
             <h4>Due date</h4>
-            <input type="datetime-local" name="date" value="" id="deadline">
+            <div>
+                <input type="datetime-local" name="date" value="" id="deadline">
+            </div>
             <br />
             <br />
             <br />

@@ -140,6 +140,26 @@ a:hover {
     transform: rotate(45deg);
 }
 
+.close {
+    /* Customize button appearance */
+    color: #fff;
+    background-color: #dc3545;
+    border-radius: 10%;
+    padding: 0.5rem 0.75rem;
+    border: none;
+    opacity: 0.8;
+    transition: opacity 0.2s ease-in-out;
+}
+
+.close:hover {
+    opacity: 1;
+}
+
+.close span {
+    /* Customize icon appearance */
+    font-size: 1.2rem;
+}
+
 @media print {
     .hidden-print {
         display: none !important;
