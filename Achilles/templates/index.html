@@ -8,6 +8,7 @@
 
 {% if alt != [] %}
 {% for i in alt %}
+<br />
 <div class="alert alert-warning alert-dismissible fade show" role="alert">
     <strong>{{i[1]}} is due this week! [{{i[4]}}]</strong> Please check it.
     <button type="button" class="close" data-dismiss="alert" aria-label="Close">
@@ -22,7 +23,7 @@
     {% if nstart != [] %}
     <h1>Not Started</h1>
     <div class="card">
-        <table id="demo" style="table-layout: fixed; width: 100%;">
+        <table id="demo" style="table-layout: fixed; width:100%;">
             <tr>
                 <th>id</th>
                 <th>Task</th>

@@ -11,7 +11,7 @@ body {
 
 /* Content container */
 .content {
-    max-width: 800px;
+    max-width: 70%;
     margin: 20px auto;
     padding: 20px;
 }
@@ -189,6 +189,8 @@ a:hover {
 #demo th {
     color: #fff;
     background: #2b2e27;
+    border: 2px solid black;
+    border-collapse: collapse;
 }
 
 /* (PART B) ON DRAG HOVER */
