@@ -179,8 +179,8 @@
             <h4>Tags</h4>
             <div class="btn-group" role="group" aria-label="Basic checkbox toggle button group">
                 {% for tag in tags %}
-                <input type="checkbox" class="btn-check" name="tag{{tag[0]}}" value="{{tag[0]}}" id="btncheck{{tag[0]}}"
-                    autocomplete="off">
+                <input type="checkbox" class="btn-check btn-success" name="tag{{tag[0]}}" value="{{tag[0]}}"
+                    id="btncheck{{tag[0]}}" autocomplete="off">
                 <label class="btn btn-outline-info" for="btncheck{{tag[0]}}">{{tag[1]}}</label>
                 {% endfor %}
             </div>
@@ -200,7 +200,7 @@
             </div>
             <br />
             <h4>Due date</h4>
-            <input type="date" name="date" id="deadline">
+            <input type="datetime-local" name="date" value="" id="deadline">
             <br />
             <br />
             <br />

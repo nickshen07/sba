@@ -16,10 +16,6 @@ con = sqlite3.connect('info.db',
                              detect_types=sqlite3.PARSE_DECLTYPES |
                              sqlite3.PARSE_COLNAMES,check_same_thread=False)
 cur = con.cursor()
-def convert_datetime(val):
-    """Convert ISO 8601 datetime to datetime.datetime object."""
-    return datetime.datetime.fromisoformat(val.decode())
-sqlite3.register_converter("datetime", convert_datetime)
 
 def get_girl():
     return "https://pic.re/image?max_size=1023"
@@ -32,25 +28,30 @@ def index():
                 f.write(datetime.now(pytz.timezone('Asia/Hong_Kong')).strftime("%Y-%m-%d %H:%M:%S"))
             reset()
             return redirect('/')
-        print(request.form)
         cont = request.form['con']
         det = request.form['det']
         opt = int(request.form['opt'])
         date = request.form['date']
-        # try:
-        gg = (cont, det, opt)
-        print(gg)
-        cur.execute("INSERT INTO Tasks (Name, Details, SID) VALUES (?, ?, ?)", gg)
-        con.commit()
-        tk = raww("SELECT MAX(TID) FROM Tasks")
-        tk = tk[0][0]
-        for i in request.form:
-            if 'tag' in i:
-                tq = f"INSERT INTO TT (TkID, TgID) VALUES ({tk}, {request.form[i]})"
-                raw(tq)
-        return redirect('/')
-        # except:
-        #     return render_template('error.html', s="invalid input")
+        try:
+            gg = ()
+            if len(date) == 0:
+                gg = (cont, det, opt)
+            else:
+                gg = (cont, det, opt, datetime.strptime(date, "%Y-%m-%dT%H:%M"))
+            if len(date) == 0:
+                cur.execute("INSERT INTO Tasks (Name, Details, SID) VALUES (?, ?, ?)", gg)
+            else:
+                cur.execute("INSERT INTO Tasks (Name, Details, SID, DDate) VALUES (?, ?, ?, ?)", gg)
+            con.commit()
+            tk = raww("SELECT MAX(TID) FROM Tasks")
+            tk = tk[0][0]
+            for i in request.form:
+                if 'tag' in i:
+                    tq = f"INSERT INTO TT (TkID, TgID) VALUES ({tk}, {request.form[i]})"
+                    raw(tq)
+            return redirect('/')
+        except:
+            return render_template('error.html', s="invalid input")
     else:
         setup()
         init()
@@ -82,9 +83,13 @@ def update(id):
         opt = int(request.form['opt'])
         date = request.form['date']
         try:
-            gg = (cont, det, opt, datetime.now().strftime("%Y-%m-%d"))
-            print(gg)
-            cur.execute("UPDATE Tasks SET Name = ?, Details = ?, SID = ?, DDate = ? WHERE TID = ?", gg)
+            gg = ()
+            if len(date) == 0:
+                gg = (cont, det, opt, id)
+                cur.execute("UPDATE Tasks SET Name = ?, Details = ?, SID = ? WHERE TID = ?", gg)
+            else:
+                gg = (cont, det, opt, datetime.strptime(date, "%Y-%m-%dT%H:%M"), id)
+                cur.execute("UPDATE Tasks SET Name = ?, Details = ?, SID = ?, DDate = ? WHERE TID = ?", gg)
             cur.execute("DELETE FROM TT WHERE TkID = ?", (id,))
             for i in request.form:
                 if 'tag' in i:
@@ -92,13 +97,14 @@ def update(id):
             con.commit()
             return redirect('/')
         except:
-            return "There was an error"
+            return render_template('error.html', s="There was an error  ")
     else:
         item = raww(f"SELECT * FROM Tasks WHERE TID = {id}")
         status = raww("SELECT * FROM Status")
         item = item[0]
         tags = raww("SELECT * FROM Tags")
         tt = raww("SELECT * FROM TT")
+        print(item)
         if len(item) == 0:
             return render_template('error.html', s="Task ID invalid")
         return render_template('update.html', item=item, status=status, tags=tags,tt=tt)

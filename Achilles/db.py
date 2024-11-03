@@ -87,7 +87,7 @@ def ins2(a):
     return ""
 
 def init():
-    lt = ["Not started", "On-going", "Completed", "I do not know"]
+    lt = ["Not started", "On-going", "Completed", "I don\'t know"]
     for i in lt:
         ins(i)
     lt = ["School", "Home"]
