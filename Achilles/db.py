@@ -40,7 +40,7 @@ CREATE TABLE IF NOT EXISTS TaskTags (
     FOREIGN KEY (TkID) REFERENCES Tasks(TID),
     FOREIGN KEY (TgID) REFERENCES Tags(TID)
 )
-"""
+""",
 }
 
 con = sqlite3.connect('info.db',
