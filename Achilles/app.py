@@ -41,13 +41,13 @@ def index():
             if len(date) == 0:
                 cur.execute("INSERT INTO Tasks (Name, Details, SID) VALUES (?, ?, ?)", gg)
             else:
-                cur.execute("INSERT INTO Tasks (Name, Details, SID, DDate) VALUES (?, ?, ?, ?)", gg)
+                cur.execute("INSERT INTO Tasks (Name, Details, SID, DueDate) VALUES (?, ?, ?, ?)", gg)
             con.commit()
             tk = raww("SELECT MAX(TID) FROM Tasks")
             tk = tk[0][0]
             for i in request.form:
                 if 'tag' in i:
-                    tq = f"INSERT INTO TT (TkID, TgID) VALUES ({tk}, {request.form[i]})"
+                    tq = f"INSERT INTO TaskTags (TkID, TgID) VALUES ({tk}, {request.form[i]})"
                     raw(tq)
             return redirect('/')
         except:
@@ -55,14 +55,14 @@ def index():
     else:
         setup()
         init()
-        alt = raww(f"SELECT * FROM Tasks WHERE DDate BETWEEN datetime('now', 'localtime') AND datetime('now','+7 day','localtime')")
+        alt = raww(f"SELECT * FROM Tasks WHERE DueDate BETWEEN datetime('now', 'localtime') AND datetime('now','+7 day','localtime')")
         nstart = raww("SELECT * FROM Tasks WHERE SID = 1")
         doing = raww("SELECT * FROM Tasks WHERE SID = 2")
         com = raww("SELECT * FROM Tasks WHERE SID = 3")
         idk = raww("SELECT * FROM Tasks WHERE SID = 4")
         tags = raww("SELECT * FROM Tags")
-        status = raww("SELECT * FROM Status")
-        tt = raww("SELECT * FROM TT")
+        status = raww("SELECT * FROM Statuses")
+        tt = raww("SELECT * FROM TaskTags")
         with open("reset.txt", 'r') as f:
             last = f.read()
         return render_template('index.html', alt=alt, nstart = nstart, doing=doing, com = com, idk=idk, url=get_girl(), tags=tags, status=status, last=last, tt=tt)
@@ -90,20 +90,20 @@ def update(id):
                 cur.execute("UPDATE Tasks SET Name = ?, Details = ?, SID = ? WHERE TID = ?", gg)
             else:
                 gg = (cont, det, opt, datetime.strptime(date, "%Y-%m-%dT%H:%M"), id)
-                cur.execute("UPDATE Tasks SET Name = ?, Details = ?, SID = ?, DDate = ? WHERE TID = ?", gg)
-            cur.execute("DELETE FROM TT WHERE TkID = ?", (id,))
+                cur.execute("UPDATE Tasks SET Name = ?, Details = ?, SID = ?, DueDate = ? WHERE TID = ?", gg)
+            cur.execute("DELETE FROM TaskTags WHERE TkID = ?", (id,))
             for i in request.form:
                 if 'tag' in i:
-                    cur.execute("INSERT INTO TT (TkID, TgID) VALUES (?, ?)",(id, request.form[i]))
+                    cur.execute("INSERT INTO TaskTags (TkID, TgID) VALUES (?, ?)",(id, request.form[i]))
             con.commit()
             return redirect('/')
         except:
             return render_template('error.html', s="There was an error")
     else:
         item = raww(f"SELECT * FROM Tasks WHERE TID = {id}")
-        status = raww("SELECT * FROM Status")
+        status = raww("SELECT * FROM Statuses")
         tags = raww("SELECT * FROM Tags")
-        tt = raww("SELECT * FROM TT")
+        tt = raww("SELECT * FROM TaskTags")
         if len(item) == 0:
             return render_template('error.html', s="Task ID invalid")
         item = item[0]

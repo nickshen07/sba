@@ -4,7 +4,7 @@ import mysql.connector
 # con = sqlite3.connect("info.db")
 # cur = con.cursor()
 
-tables = ["Tasks", "Tags", "Status", "TT"]
+tables = ["Tasks", "Tags", "Statuses", "TaskTags"]
 
 map = {
 "Tasks":"""
@@ -13,8 +13,8 @@ CREATE TABLE IF NOT EXISTS Tasks (
     Name VARCHAR(255) DEFAULT 'No-Name' NOT NULL,
     Details VARCHAR(255) DEFAULT NULL,
     SID INTEGER DEFAULT 0 NOT NULL,
-    DDate datetime,
-    FOREIGN KEY (SID) REFERENCES Status(SID)
+    DueDate datetime,
+    FOREIGN KEY (SID) REFERENCES Statuses(SID)
 )
 """,
 
@@ -25,15 +25,15 @@ CREATE TABLE IF NOT EXISTS Tags (
 )
 """, 
 
-"Status":"""
-CREATE TABLE IF NOT EXISTS Status (
+"Statuses":"""
+CREATE TABLE IF NOT EXISTS Statuses (
     SID INTEGER PRIMARY KEY AUTOINCREMENT,
     Name VARCHAR(255) UNIQUE
 )
 """, 
 
-"TT":"""
-CREATE TABLE IF NOT EXISTS TT (
+"TaskTags":"""
+CREATE TABLE IF NOT EXISTS TaskTags (
     TkID INTEGER,
     TgID INTEGER,
     PRIMARY KEY (TkID, TgID),
@@ -71,10 +71,10 @@ def raww(query):
     return res
 
 def ins(a):
-    res = cur.execute("SELECT 1 FROM Status WHERE EXISTS (SELECT * FROM Status WHERE Name = ?)", (a,))
+    res = cur.execute("SELECT 1 FROM Statuses WHERE EXISTS (SELECT * FROM Statuses WHERE Name = ?)", (a,))
     t = res.fetchall()
     if len(t)==0:
-        cur.execute("INSERT INTO Status (Name) VALUES (?)", (a,))
+        cur.execute("INSERT INTO Statuses (Name) VALUES (?)", (a,))
     con.commit()
     return ""
 

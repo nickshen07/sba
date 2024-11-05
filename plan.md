@@ -60,3 +60,11 @@ Table
 
 MAC: 2C:CF:67:14:6E:B7
 IP: 192.168.31.122
+
+Changes
+    only list one table in index page to prevent dragging to other table
+    save dragging order
+    delete confirmation screen
+    reset confirmation screen
+    hyperlink retrn home page 
+    calendar
