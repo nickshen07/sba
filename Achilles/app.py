@@ -17,6 +17,7 @@ con = sqlite3.connect('info.db',
                              sqlite3.PARSE_COLNAMES,check_same_thread=False)
 cur = con.cursor()
 
+
 def get_girl():
     return "https://pic.re/image?max_size=1023"
 
@@ -28,6 +29,7 @@ def index():
                 f.write(datetime.now(pytz.timezone('Asia/Hong_Kong')).strftime("%Y-%m-%d %H:%M:%S"))
             reset()
             return redirect('/')
+        print(request.form)
         cont = request.form['con']
         det = request.form['det']
         opt = int(request.form['opt'])
@@ -47,7 +49,7 @@ def index():
             tk = tk[0][0]
             for i in request.form:
                 if 'tag' in i:
-                    tq = f"INSERT INTO TaskTags (TkID, TgID) VALUES ({tk}, {request.form[i]})"
+                    tq = f"INSERT INTO TaskTags (TaskID, TagID) VALUES ({tk}, {request.form[i]})"
                     raw(tq)
             return redirect('/')
         except:
@@ -91,10 +93,10 @@ def update(id):
             else:
                 gg = (cont, det, opt, datetime.strptime(date, "%Y-%m-%dT%H:%M"), id)
                 cur.execute("UPDATE Tasks SET Name = ?, Details = ?, SID = ?, DueDate = ? WHERE TID = ?", gg)
-            cur.execute("DELETE FROM TaskTags WHERE TkID = ?", (id,))
+            cur.execute("DELETE FROM TaskTags WHERE TaskID = ?", (id,))
             for i in request.form:
                 if 'tag' in i:
-                    cur.execute("INSERT INTO TaskTags (TkID, TgID) VALUES (?, ?)",(id, request.form[i]))
+                    cur.execute("INSERT INTO TaskTags (TaskID, TagID) VALUES (?, ?)",(id, request.form[i]))
             con.commit()
             return redirect('/')
         except:

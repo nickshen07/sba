@@ -43,6 +43,8 @@
                         {% for j in tt%}
                         {% if i[0] ==j[0]%}
                         <button type="button" class="btn btn-success">{{tags[j[1]-1][1]}}</button>
+                        <br />
+                        <br />
                         {% endif %}
                         {% endfor %}
                     </div>
@@ -50,7 +52,7 @@
                 <td>{{i[3]}}</td>
                 <td>{{i[4]}}</td>
                 <td>
-                    <a href="/delete/{{i[0]}}">Delete</a>
+                    <a href="/delete/{{i[0]}}" onclick="return confirm('Are you sure?')">Delete</a>
                     <br>
                     <a href="/update/{{i[0]}}">Update</a>
                 </td>
@@ -83,6 +85,8 @@
                         {% for j in tt%}
                         {% if i[0] ==j[0]%}
                         <button type="button" class="btn btn-success">{{tags[j[1]-1][1]}}</button>
+                        <br />
+                        <br />
                         {% endif %}
                         {% endfor %}
                     </div>
@@ -90,7 +94,7 @@
                 <td>{{i[3]}}</td>
                 <td>{{i[4]}}</td>
                 <td>
-                    <a href="/delete/{{i[0]}}">Delete</a>
+                    <a href="/delete/{{i[0]}}" onclick="return confirm('Are you sure?')">Delete</a>
                     <br>
                     <a href="/update/{{i[0]}}">Update</a>
                 </td>
@@ -123,6 +127,8 @@
                         {% for j in tt%}
                         {% if i[0] ==j[0]%}
                         <button type="button" class="btn btn-success">{{tags[j[1]-1][1]}}</button>
+                        <br />
+                        <br />
                         {% endif %}
                         {% endfor %}
                     </div>
@@ -130,7 +136,7 @@
                 <td>{{i[3]}}</td>
                 <td>{{i[4]}}</td>
                 <td>
-                    <a href="/delete/{{i[0]}}">Delete</a>
+                    <a href="/delete/{{i[0]}}" onclick="return confirm('Are you sure?')">Delete</a>
                     <br>
                     <a href="/update/{{i[0]}}">Update</a>
                 </td>
@@ -163,6 +169,8 @@
                         {% for j in tt%}
                         {% if i[0] ==j[0]%}
                         <button type="button" class="btn btn-success">{{tags[j[1]-1][1]}}</button>
+                        <br />
+                        <br />
                         {% endif %}
                         {% endfor %}
                     </div>
@@ -170,7 +178,7 @@
                 <td>{{i[3]}}</td>
                 <td>{{i[4]}}</td>
                 <td>
-                    <a href="/delete/{{i[0]}}">Delete</a>
+                    <a href="/delete/{{i[0]}}" onclick="return confirm('Are you sure?')">Delete</a>
                     <br>
                     <a href="/update/{{i[0]}}">Update</a>
                 </td>
@@ -185,12 +193,12 @@
         <form action="/" method="POST">
             <h4>Name</h4>
             <div>
-                <input type="text" name="con" id="content">
+                <input type="text" name="con" id="content" size="140">
             </div><br />
             <br />
             <h4>Details</h4>
             <div>
-                <input type="text" name="det" id="det">
+                <a><textarea rows="15" cols="140" name="det" id="det"></textarea></a>
             </div>
             <br />
             <br />
@@ -234,7 +242,8 @@
     <br />
     <br />
     <p>Last reset: {{last}}</p>
-    <input type="submit" style="background-color:red;" name="reset" value="reset">
+    <input type="submit" style="background-color:red;" name="reset" value="reset"
+        onclick="return confirm('Are you sure?')">
     </form>
 
 </div>

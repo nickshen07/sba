@@ -65,7 +65,5 @@ Changes
     only list one table in index page to prevent dragging to other table
     save dragging order
     tag manager
-    delete confirmation screen
-    reset confirmation screen
-    hyperlink retrn home page 
+    hyperlink return home page 
     calendar
