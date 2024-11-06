@@ -67,3 +67,4 @@ Changes
     tag manager
     hyperlink return home page 
     calendar
+    progress bars

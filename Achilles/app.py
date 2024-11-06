@@ -23,11 +23,15 @@ def get_girl():
 
 @app.route('/', methods=['POST', 'GET'])
 def index():
+    page = 0
     if request.method == "POST":
         if 'reset' in request.form:
             with open("reset.txt", 'w') as f:
                 f.write(datetime.now(pytz.timezone('Asia/Hong_Kong')).strftime("%Y-%m-%d %H:%M:%S"))
             reset()
+            return redirect('/')
+        if 'page' in request.form:
+            page = request.form['page']
             return redirect('/')
         print(request.form)
         cont = request.form['con']
@@ -67,7 +71,7 @@ def index():
         tt = raww("SELECT * FROM TaskTags")
         with open("reset.txt", 'r') as f:
             last = f.read()
-        return render_template('index.html', alt=alt, nstart = nstart, doing=doing, com = com, idk=idk, url=get_girl(), tags=tags, status=status, last=last, tt=tt)
+        return render_template('index.html', alt=alt, nstart = nstart, doing=doing, com = com, idk=idk, url=get_girl(), tags=tags, status=status, last=last, tt=tt, page=page)
 
 @app.route('/delete/<int:id>')
 def delete(id):

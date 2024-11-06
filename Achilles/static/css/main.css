@@ -60,13 +60,14 @@ input[type="submit"] {
 }
 
 /* Link styles */
+
 a {
     text-decoration: none;
     color: #333;
 }
 
 a:hover {
-    text-decoration: underline;
+    text-decoration: none;
 }
 
 .center {

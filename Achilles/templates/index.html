@@ -19,8 +19,9 @@
 {% endif %}
 
 
+
 <div class="content pt-5">
-    {% if nstart != [] %}
+    {% if nstart != [] and (page == 0 or page == 1) %}
     <h1>Not Started</h1>
     <div class="card">
         <table id="demo" style="table-layout: fixed; width:100%;">
@@ -62,7 +63,7 @@
     </div>
     {% endif %}
     <br />
-    {% if doing != [] %}
+    {% if doing != [] and (page == 0 or page == 2) %}
     <h1>On-going</h1>
     <div class="card">
         <table id="demo" style="table-layout: fixed; width: 100%;">
@@ -104,7 +105,7 @@
     </div>
     {% endif %}
     <br />
-    {% if com != [] %}
+    {% if com != [] and (page == 0 or page == 3) %}
     <h1>Completed</h1>
     <div class="card">
         <table id="demo" style="table-layout: fixed; width: 100%;">
@@ -146,7 +147,7 @@
     </div>
     {% endif %}
     <br />
-    {% if idk != [] %}
+    {% if idk != [] and (page == 0 or page == 4) %}
     <h1>I don't know</h1>
     <div class="card">
         <table id="demo" style="table-layout: fixed; width: 100%;">
