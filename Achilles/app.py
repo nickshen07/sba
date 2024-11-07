@@ -23,6 +23,7 @@ def get_girl():
 
 @app.route('/', methods=['POST', 'GET'])
 def index():
+    page=0
     if request.method == "POST":
         if 'reset' in request.form:
             with open("reset.txt", 'w') as f:
