@@ -38,6 +38,8 @@ def index():
         det = request.form['det']
         opt = int(request.form['opt'])
         date = request.form['date']
+        if cont == "":
+            cont = "(no name)"
         try:
             gg = ()
             if len(date) == 0:
@@ -61,7 +63,7 @@ def index():
     else:
         setup()
         init()
-        alt = raww(f"SELECT * FROM Tasks WHERE DueDate BETWEEN datetime('now', 'localtime') AND datetime('now','+7 day','localtime')")
+        alt = raww("SELECT * FROM Tasks WHERE DueDate BETWEEN datetime('now', 'localtime') AND datetime('now','+7 day','localtime')")
         nstart = raww("SELECT * FROM Tasks WHERE SID = 1")
         doing = raww("SELECT * FROM Tasks WHERE SID = 2")
         com = raww("SELECT * FROM Tasks WHERE SID = 3")
@@ -91,6 +93,8 @@ def update(id):
         det = request.form['det']
         opt = int(request.form['opt'])
         date = request.form['date']
+        if cont == "":
+            cont = "(no name)"
         try:
             gg = ()
             if len(date) == 0:

@@ -10,7 +10,7 @@ map = {
 "Tasks":"""
 CREATE TABLE IF NOT EXISTS Tasks (
     TID INTEGER PRIMARY KEY AUTOINCREMENT,
-    Name VARCHAR(255) NOT NULL DEFAULT 'No-Name',
+    Name VARCHAR(255) NOT NULL DEFAULT 'no name',
     Details VARCHAR(255) DEFAULT NULL,
     SID INTEGER DEFAULT 0 NOT NULL,
     DueDate datetime,
@@ -90,6 +90,6 @@ def init():
     lt = ["Not started", "On-going", "Completed", "I don\'t know"]
     for i in lt:
         ins(i)
-    lt = ["School", "Home"]
-    for i in lt:
+    lt2 = ["School", "Home"]
+    for i in lt2:
         ins2(i)
