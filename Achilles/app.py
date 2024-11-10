@@ -76,8 +76,10 @@ def index():
 @app.route('/delete/<int:id>')
 def delete(id):
     query = f"DELETE FROM Tasks WHERE TID = {id}"
+    query2 = f"DELETE FROM TaskTags WHERE TID = {id}"
     try:
         raw(query)
+        raw(query2)
         return redirect('/')
     except:
         return render_template('error.html', s="Task ID invalid")
