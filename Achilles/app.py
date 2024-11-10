@@ -55,8 +55,7 @@ def index():
             tk = tk[0][0]
             for i in request.form:
                 if 'tag' in i:
-                    tq = f"INSERT INTO TaskTags (TaskID, TagID) VALUES ({tk}, {request.form[i]})"
-                    raw(tq)
+                    cur.execute("INSERT INTO TaskTags (TaskID, TagID) VALUES (?, ?)",(tk, request.form[i]))
             return redirect('/')
         except:
             return render_template('error.html', s="invalid input")
