@@ -1,12 +1,14 @@
 import sqlite3
 import mysql.connector
 
-# con = sqlite3.connect("info.db")
-# cur = con.cursor()
+con = sqlite3.connect('info.db',
+                             detect_types=sqlite3.PARSE_DECLTYPES |
+                             sqlite3.PARSE_COLNAMES,check_same_thread=False)
+cur = con.cursor()
 
 tables = ["Tasks", "Tags", "Statuses", "TaskTags"]
 
-map = {
+tablemap = {
 "Tasks":"""
 CREATE TABLE IF NOT EXISTS Tasks (
     TID INTEGER PRIMARY KEY AUTOINCREMENT,
@@ -43,14 +45,10 @@ CREATE TABLE IF NOT EXISTS TaskTags (
 """,
 }
 
-con = sqlite3.connect('info.db',
-                             detect_types=sqlite3.PARSE_DECLTYPES |
-                             sqlite3.PARSE_COLNAMES,check_same_thread=False)
-cur = con.cursor()
 
 def setup():
     for i in tables:
-        cur.execute(map[i])
+        cur.execute(tablemap[i])
     con.commit()
 
 def reset():
