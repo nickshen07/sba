@@ -68,26 +68,20 @@ def raww(query):
     con.commit()
     return res
 
-def ins(a):
-    res = cur.execute("SELECT 1 FROM Statuses WHERE EXISTS (SELECT * FROM Statuses WHERE Name = ?)", (a,))
+def ins(a, b):
+    q = f"SELECT 1 FROM {b} WHERE EXISTS (SELECT * FROM {b} WHERE Name = ?)"
+    res = cur.execute(q, (a,))
     t = res.fetchall()
     if len(t)==0:
-        cur.execute("INSERT INTO Statuses (Name) VALUES (?)", (a,))
-    con.commit()
-    return ""
-
-def ins2(a):
-    res = cur.execute("SELECT 1 FROM Tags WHERE EXISTS (SELECT * FROM Tags WHERE Name = ?)", (a,))
-    t = res.fetchall()
-    if len(t)==0:
-        cur.execute("INSERT INTO Tags (Name) VALUES (?)", (a,))
+        q = f"INSERT INTO {b} (Name) VALUES (?)"
+        cur.execute(q, (a,))
     con.commit()
     return ""
 
 def init():
     lt = ["Not started", "On-going", "Completed", "I don\'t know"]
     for i in lt:
-        ins(i)
-    lt2 = ["School", "Home"]
-    for i in lt2:
-        ins2(i)
+        ins(i, "Statuses")
+    lt = ["School", "Home"]
+    for i in lt:
+        ins(i, "Tags")
