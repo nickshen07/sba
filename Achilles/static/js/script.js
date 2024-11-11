@@ -1,7 +1,7 @@
 const tbody = document.getElementsByTagName("tbody")[0];
 const rows = tbody.rows;
 
-for (i = 0; i < rows.length; i++) {
+for (i = 1; i < rows.length; i++) {
     var row = rows[i];
     row.setAttribute('draggable', true);
 

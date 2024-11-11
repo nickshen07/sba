@@ -45,11 +45,26 @@ CREATE TABLE IF NOT EXISTS TaskTags (
 """,
 }
 
+def ins(a, b):
+    q = f"SELECT 1 FROM {b} WHERE EXISTS (SELECT * FROM {b} WHERE Name = ?)"
+    res = cur.execute(q, (a,))
+    t = res.fetchall()
+    if len(t)==0:
+        q = f"INSERT INTO {b} (Name) VALUES (?)"
+        cur.execute(q, (a,))
+    con.commit()
+    return ""
 
-def setup():
+def init():
     for i in tables:
         cur.execute(tablemap[i])
     con.commit()
+    lt = ["Not started", "On-going", "Completed", "I don\'t know"]
+    for i in lt:
+        ins(i, "Statuses")
+    lt = ["School", "Home"]
+    for i in lt:
+        ins(i, "Tags")
 
 def reset():
     for i in tables:
@@ -67,21 +82,3 @@ def raww(query):
     res = res.fetchall()
     con.commit()
     return res
-
-def ins(a, b):
-    q = f"SELECT 1 FROM {b} WHERE EXISTS (SELECT * FROM {b} WHERE Name = ?)"
-    res = cur.execute(q, (a,))
-    t = res.fetchall()
-    if len(t)==0:
-        q = f"INSERT INTO {b} (Name) VALUES (?)"
-        cur.execute(q, (a,))
-    con.commit()
-    return ""
-
-def init():
-    lt = ["Not started", "On-going", "Completed", "I don\'t know"]
-    for i in lt:
-        ins(i, "Statuses")
-    lt = ["School", "Home"]
-    for i in lt:
-        ins(i, "Tags")
