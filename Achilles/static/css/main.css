@@ -173,7 +173,7 @@ a:hover {
 
 #demo {
     width: 400px;
-    border-collapse: collapse;
+    order-collapse: collapse;
 }
 
 #demo tr:nth-child(odd) {
@@ -197,4 +197,13 @@ a:hover {
 /* (PART B) ON DRAG HOVER */
 #demo tr.hover {
     background: #eff70d;
+}
+
+textarea {
+    -webkit-box-sizing: border-box;
+    -moz-box-sizing: border-box;
+    box-sizing: border-box;
+
+    width: 85%;
+    height: 20%;
 }

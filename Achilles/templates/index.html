@@ -18,7 +18,15 @@
 {% endfor %}
 {% endif %}
 
+<form action="/" method="POST">
+    <input type="submit" style="background-color:rgba(0, 255, 221, 0.254);" name="page" value="All">
+    <input type="submit" style="background-color:rgba(0, 255, 204, 0.254);" name="page" value="Not started">
+    <input type="submit" style="background-color:rgb(0, 255, 204, 0.254);" name="page" value="On-going">
+    <input type="submit" style="background-color:rgb(0, 255, 204, 0.254);" name="page" value="Completed">
+    <input type="submit" style="background-color:rgb(0, 255, 204, 0.254);" name="page" value="I don't know">
+</form>
 
+<p>Page state: {{page}}</p>
 
 <div class="content pt-5">
     {% if nstart != [] and (page == 0 or page == 1) %}
@@ -194,7 +202,7 @@
         <form action="/" method="POST">
             <h4>Name</h4>
             <div>
-                <input type="text" name="con" id="content" size="85%">
+                <input type="text" name="con" id="content" style="width: 85%; padding: .5em 1em;">
             </div><br />
             <br />
             <h4>Details</h4>
@@ -245,6 +253,7 @@
     <p>Last reset: {{last}}</p>
     <input type="submit" style="background-color:red;" name="reset" value="reset"
         onclick="return confirm('Are you sure?')">
+
     </form>
 
 </div>

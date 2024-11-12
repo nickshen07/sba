@@ -24,8 +24,16 @@ def get_girl():
 Modules
 """
 
+def rjson():
+    with open("data.json", "r") as f:
+        data = json.load(f)
+    return data
+
+def wjson(data):
+    with open("data.json", "w") as f:
+        json.dump(data,f,indent=4)
+
 def IndexGet():
-    page=0
     init()
     alt = raww("SELECT * FROM Tasks WHERE DueDate BETWEEN datetime('now', 'localtime') AND datetime('now','+7 day','localtime')")
     nstart = raww("SELECT * FROM Tasks WHERE SID = 1")
@@ -35,18 +43,34 @@ def IndexGet():
     tags = raww("SELECT * FROM Tags")
     status = raww("SELECT * FROM Statuses")
     tt = raww("SELECT * FROM TaskTags")
-    with open("reset.txt", 'r') as f:
-        last = f.read()
+    data = rjson()
+    last = data["reset"]
+    page = data["page"]
     return render_template('index.html', alt=alt, nstart = nstart, doing=doing, com = com, idk=idk, url=get_girl(), tags=tags, status=status, last=last, tt=tt, page=page)
 
 def IndexPost(response):
     if 'reset' in response:
-        with open("reset.txt", 'w') as f:
-            f.write(datetime.now(pytz.timezone('Asia/Hong_Kong')).strftime("%Y-%m-%d %H:%M:%S"))
+        data = rjson()
+        data["reset"] = str(datetime.now(pytz.timezone('Asia/Hong_Kong')).strftime("%Y-%m-%d %H:%M:%S"))
+        wjson(data)
         reset()
         return redirect('/')
     if 'page' in response:
-        page = response['page']
+        data = rjson()
+        c = response['page']
+        print(c)
+        if c == "Not started":
+            num = 1
+        elif c == "On-going":
+            num = 2
+        elif c == "Completed":
+            num = 3
+        elif c == "I don't know":
+            num = 4
+        else:
+            num = 0
+        data["page"] = num
+        wjson(data)
         return redirect('/')
     cont = response['con']
     det = response['det']
@@ -69,12 +93,13 @@ def IndexPost(response):
         tk = tk[0][0]
         for i in response:
             if 'tag' in i:
-                cur.execute("INSERT INTO TaskTags (TaskID, TagID) VALUES (?, ?)",(tk, response[i]))
+                cur.execute("INSERT INTO TaskTags (TaskID, TagID) VALUES (?, ?)",(tk, int(response[i])))
+        con.commit()
         return redirect('/')
     except:
         return render_template('error.html', s="invalid input")
 
-def UpdatePost(response):
+def UpdatePost(response, id):
     cont = response['con']
     det = response['det']
     opt = int(response['opt'])
@@ -98,7 +123,7 @@ def UpdatePost(response):
     except:
         return render_template('error.html', s="There was an error")
 
-def UpdateGet():
+def UpdateGet(id):
     item = raww(f"SELECT * FROM Tasks WHERE TID = {id}")
     status = raww("SELECT * FROM Statuses")
     tags = raww("SELECT * FROM Tags")
@@ -134,9 +159,9 @@ def delete(id):
 @app.route('/update/<int:id>', methods=['GET', 'POST'])
 def update(id):
     if request.method == 'POST':
-        return UpdatePost(request.form)
+        return UpdatePost(request.form, id)
     else:
-        return UpdateGet()
+        return UpdateGet(id)
 
 @app.errorhandler(HTTPException)
 def handleError(err):
