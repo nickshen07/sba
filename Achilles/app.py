@@ -19,6 +19,7 @@ cur = con.cursor()
 def get_girl():
     return "https://pic.re/image?max_size=1023"
 
+version = ["All", "Not started", "On-going", "Completed", "I don't know"]
 
 """
 Modules
@@ -33,6 +34,9 @@ def wjson(data):
     with open("data.json", "w") as f:
         json.dump(data,f,indent=4)
 
+def error(s):
+    return render_template('error.html', s=s)
+
 def IndexGet():
     init()
     alt = raww("SELECT * FROM Tasks WHERE DueDate BETWEEN datetime('now', 'localtime') AND datetime('now','+7 day','localtime')")
@@ -40,13 +44,14 @@ def IndexGet():
     doing = raww("SELECT * FROM Tasks WHERE SID = 2")
     com = raww("SELECT * FROM Tasks WHERE SID = 3")
     idk = raww("SELECT * FROM Tasks WHERE SID = 4")
-    tags = raww("SELECT * FROM Tags")
     status = raww("SELECT * FROM Statuses")
+    tags = raww("SELECT * FROM Tags ORDER BY Name")
     tt = raww("SELECT * FROM TaskTags")
     data = rjson()
     last = data["reset"]
     page = data["page"]
-    return render_template('index.html', alt=alt, nstart = nstart, doing=doing, com = com, idk=idk, url=get_girl(), tags=tags, status=status, last=last, tt=tt, page=page)
+    ver = version[page]
+    return render_template('index.html', alt=alt, nstart = nstart, doing=doing, com = com, idk=idk, url=get_girl(), tags=tags, status=status, last=last, tt=tt, page=page, ver=ver)
 
 def IndexPost(response):
     if 'reset' in response:
@@ -58,17 +63,10 @@ def IndexPost(response):
     if 'page' in response:
         data = rjson()
         c = response['page']
-        print(c)
-        if c == "Not started":
-            num = 1
-        elif c == "On-going":
-            num = 2
-        elif c == "Completed":
-            num = 3
-        elif c == "I don't know":
-            num = 4
-        else:
-            num = 0
+        for i in range(len(version)):
+            if version[i] == c:
+                num = i
+                break
         data["page"] = num
         wjson(data)
         return redirect('/')
@@ -97,7 +95,7 @@ def IndexPost(response):
         con.commit()
         return redirect('/')
     except:
-        return render_template('error.html', s="invalid input")
+        return error("invalid input")
 
 def UpdatePost(response, id):
     cont = response['con']
@@ -121,12 +119,12 @@ def UpdatePost(response, id):
         con.commit()
         return redirect('/')
     except:
-        return render_template('error.html', s="There was an error")
+        return error("There was an error")
 
 def UpdateGet(id):
     item = raww(f"SELECT * FROM Tasks WHERE TID = {id}")
     status = raww("SELECT * FROM Statuses")
-    tags = raww("SELECT * FROM Tags")
+    tags = raww("SELECT * FROM Tags ORDER BY Name")
     tt = raww("SELECT * FROM TaskTags")
     if len(item) == 0:
         return render_template('error.html', s="Task ID invalid")
@@ -134,14 +132,17 @@ def UpdateGet(id):
     return render_template('update.html', item=item, status=status, tags=tags,tt=tt)
 
 def TagPost(response):
+    if response['tagname'] == "":
+        return error("Tag name cannot be NULL")
     try:
         cur.execute("INSERT INTO Tags (Name) VALUES (?)", (response['tagname'],))
+        con.commit()
         return redirect('/tags')
     except:
-        return render_template('error.html', s="There was an error")
+        return error("Tag name cannot be repeated")
 
 def TagGet():
-    item = raww("SELECT * FROM Tags")
+    item = raww("SELECT * FROM Tags ORDER BY Name")
     return render_template('tags.html', item=item)
 
 """
@@ -155,6 +156,8 @@ def index():
     else:
         return IndexGet()
 
+
+
 @app.route('/delete/<int:id>')
 def delete(id):
     query = f"DELETE FROM Tasks WHERE TID = {id}"
@@ -164,7 +167,7 @@ def delete(id):
         raw(query2)
         return redirect('/')
     except:
-        return render_template('error.html', s="Task ID invalid")
+        return error("Task ID invalid")
 
 @app.route('/update/<int:id>', methods=['GET', 'POST'])
 def update(id):
@@ -176,10 +179,13 @@ def update(id):
 @app.route('/deletetag/<int:id>')
 def deletetag(id):
     try:
+        tag = raww(f"SELECT * FROM Tasks t, TaskTags t2 WHERE t.TID = t2.TaskID AND t2.TagID == {id}")
+        if len(tag) > 0:
+            return error("Please ensure all tasks do not contain this tag")
         raw(f"DELETE FROM Tags WHERE TID = {id}")
         return redirect('/tags')
     except:
-        return render_template('error.html', s="Task ID invalid")
+        return error("Task ID invalid")
 
 @app.route('/tags', methods=['GET', 'POST'])
 def tags():
@@ -188,9 +194,14 @@ def tags():
     else:
         return TagGet()
 
+@app.route('/reset')
+def resett():
+    reset()
+    return redirect('/')
+
 @app.errorhandler(HTTPException)
 def handleError(err):
-    return render_template('error.html', s=str(err.code)+" "+err.name+" "+err.description)
+    return error(str(err.code)+" "+err.name+" "+err.description)
 
 
 

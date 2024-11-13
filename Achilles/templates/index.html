@@ -19,50 +19,57 @@
 {% endif %}
 
 <form action="/" method="POST">
-    <input type="submit" style="background-color:rgba(0, 255, 221, 0.254);" name="page" value="All">
-    <input type="submit" style="background-color:rgba(0, 255, 204, 0.254);" name="page" value="Not started">
-    <input type="submit" style="background-color:rgb(0, 255, 204, 0.254);" name="page" value="On-going">
-    <input type="submit" style="background-color:rgb(0, 255, 204, 0.254);" name="page" value="Completed">
-    <input type="submit" style="background-color:rgb(0, 255, 204, 0.254);" name="page" value="I don't know">
+    <input type="submit" style="-webkit-text-fill-color: black; background-color:rgba(0, 255, 221, 0.254);" name="page"
+        value="All">
+    <input type="submit" style="-webkit-text-fill-color: black; background-color:rgba(0, 255, 204, 0.254);" name="page"
+        value="Not started">
+    <input type="submit" style="-webkit-text-fill-color: black; background-color:rgb(0, 255, 204, 0.254);" name="page"
+        value="On-going">
+    <input type="submit" style="-webkit-text-fill-color: black; background-color:rgb(0, 255, 204, 0.254);" name="page"
+        value="Completed">
+    <input type="submit" style="-webkit-text-fill-color: black; background-color:rgb(0, 255, 204, 0.254);" name="page"
+        value="I don't know">
 </form>
 
-<p>Page state: {{page}}</p>
+<br />
+<br />
 
-<br/>
+<a href="/tags" class="btn btn-secondary btn-lg active" role="button" aria-pressed="true">Tags</a>
+<br />
+<br />
 
-<a href="/tags">Tags</a>
 
 <div class="content pt-5">
+    <div class="d-inline p-2 text-black" style="background-color: rgba(237, 165, 11, 0.749);">
+        Page version: {{ver}}</div>
     {% if nstart != [] and (page == 0 or page == 1) %}
     <h1>Not Started</h1>
     <div class="card">
         <table id="demo" style="table-layout: fixed; width:100%;">
             <tr>
-                <th>id</th>
                 <th>Task</th>
                 <th>Details</th>
                 <th>Tags</th>
-                <th>SID</th>
                 <th>Due Date</th>
                 <th>Actions</th>
             </tr>
             {% for i in nstart %}
             <tr>
-                <td>{{i[0]}}</td>
                 <td>{{i[1]}}</td>
                 <td>{{i[2]}}</td>
                 <td>
                     <div class="container">
                         {% for j in tt%}
                         {% if i[0] ==j[0]%}
-                        <button type="button" class="btn btn-success">{{tags[j[1]-1][1]}}</button>
-                        <br />
-                        <br />
+                        {% for k in tags %}
+                        {% if k[0] == j[1] %}
+                        <button type="button" class="btn btn-success">{{k[1]}}</button>
+                        {% endif %}
+                        {% endfor %}
                         {% endif %}
                         {% endfor %}
                     </div>
                 </td>
-                <td>{{i[3]}}</td>
                 <td>{{i[4]}}</td>
                 <td>
                     <a href="/delete/{{i[0]}}" onclick="return confirm('Are you sure?')">Delete</a>
@@ -80,31 +87,29 @@
     <div class="card">
         <table id="demo" style="table-layout: fixed; width: 100%;">
             <tr>
-                <th>id</th>
                 <th>Task</th>
                 <th>Details</th>
                 <th>Tags</th>
-                <th>SID</th>
                 <th>Due Date</th>
                 <th>Actions</th>
             </tr>
             {% for i in doing %}
             <tr>
-                <td>{{i[0]}}</td>
                 <td>{{i[1]}}</td>
                 <td>{{i[2]}}</td>
                 <td>
                     <div class="container">
                         {% for j in tt%}
                         {% if i[0] ==j[0]%}
-                        <button type="button" class="btn btn-success">{{tags[j[1]-1][1]}}</button>
-                        <br />
-                        <br />
+                        {% for k in tags %}
+                        {% if k[0] == j[1] %}
+                        <button type="button" class="btn btn-success">{{k[1]}}</button>
+                        {% endif %}
+                        {% endfor %}
                         {% endif %}
                         {% endfor %}
                     </div>
                 </td>
-                <td>{{i[3]}}</td>
                 <td>{{i[4]}}</td>
                 <td>
                     <a href="/delete/{{i[0]}}" onclick="return confirm('Are you sure?')">Delete</a>
@@ -122,31 +127,31 @@
     <div class="card">
         <table id="demo" style="table-layout: fixed; width: 100%;">
             <tr>
-                <th>id</th>
                 <th>Task</th>
                 <th>Details</th>
                 <th>Tags</th>
-                <th>SID</th>
                 <th>Due Date</th>
                 <th>Actions</th>
             </tr>
             {% for i in com %}
             <tr>
-                <td>{{i[0]}}</td>
                 <td>{{i[1]}}</td>
                 <td>{{i[2]}}</td>
                 <td>
                     <div class="container">
                         {% for j in tt%}
                         {% if i[0] ==j[0]%}
-                        <button type="button" class="btn btn-success">{{tags[j[1]-1][1]}}</button>
-                        <br />
-                        <br />
+                        {% for k in tags %}
+                        {% if k[0] == j[1] %}
+                        <button type="button" class="btn btn-success">{{k[1]}}</button>
+                        {% endif %}
+                        {% endfor %}
+
                         {% endif %}
                         {% endfor %}
                     </div>
                 </td>
-                <td>{{i[3]}}</td>
+
                 <td>{{i[4]}}</td>
                 <td>
                     <a href="/delete/{{i[0]}}" onclick="return confirm('Are you sure?')">Delete</a>
@@ -164,31 +169,30 @@
     <div class="card">
         <table id="demo" style="table-layout: fixed; width: 100%;">
             <tr>
-                <th>id</th>
                 <th>Task</th>
                 <th>Details</th>
                 <th>Tags</th>
-                <th>SID</th>
                 <th>Due Date</th>
                 <th>Actions</th>
             </tr>
             {% for i in idk %}
             <tr>
-                <td>{{i[0]}}</td>
+
                 <td>{{i[1]}}</td>
                 <td>{{i[2]}}</td>
                 <td>
                     <div class="container">
                         {% for j in tt%}
                         {% if i[0] ==j[0]%}
-                        <button type="button" class="btn btn-success">{{tags[j[1]-1][1]}}</button>
-                        <br />
-                        <br />
+                        {% for k in tags %}
+                        {% if k[0] == j[1] %}
+                        <button type="button" class="btn btn-success">{{k[1]}}</button>
+                        {% endif %}
+                        {% endfor %}
                         {% endif %}
                         {% endfor %}
                     </div>
                 </td>
-                <td>{{i[3]}}</td>
                 <td>{{i[4]}}</td>
                 <td>
                     <a href="/delete/{{i[0]}}" onclick="return confirm('Are you sure?')">Delete</a>
@@ -221,6 +225,7 @@
                 <input type="checkbox" class="btn-check" name="tag{{tag[0]}}" value="{{tag[0]}}" id="btncheck{{tag[0]}}"
                     autocomplete="off">
                 <label class="btn btn-outline-success" for="btncheck{{tag[0]}}">{{tag[1]}}</label>
+                <br />
                 {% endfor %}
             </div>
             <br />
