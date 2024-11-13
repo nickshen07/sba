@@ -133,6 +133,16 @@ def UpdateGet(id):
     item = item[0]
     return render_template('update.html', item=item, status=status, tags=tags,tt=tt)
 
+def TagPost(response):
+    try:
+        cur.execute("INSERT INTO Tags (Name) VALUES (?)", (response['tagname'],))
+        return redirect('/tags')
+    except:
+        return render_template('error.html', s="There was an error")
+
+def TagGet():
+    item = raww("SELECT * FROM Tags")
+    return render_template('tags.html', item=item)
 
 """
 Interface
@@ -162,6 +172,21 @@ def update(id):
         return UpdatePost(request.form, id)
     else:
         return UpdateGet(id)
+
+@app.route('/deletetag/<int:id>')
+def deletetag(id):
+    try:
+        raw(f"DELETE FROM Tags WHERE TID = {id}")
+        return redirect('/tags')
+    except:
+        return render_template('error.html', s="Task ID invalid")
+
+@app.route('/tags', methods=['GET', 'POST'])
+def tags():
+    if request.method == 'POST':
+        return TagPost(request.form)
+    else:
+        return TagGet()
 
 @app.errorhandler(HTTPException)
 def handleError(err):
