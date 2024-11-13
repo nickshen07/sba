@@ -15,10 +15,6 @@ con = sqlite3.connect('info.db',
                              sqlite3.PARSE_COLNAMES,check_same_thread=False)
 cur = con.cursor()
 
-
-def get_girl():
-    return "https://pic.re/image?max_size=1023"
-
 version = ["All", "Not started", "On-going", "Completed", "I don't know"]
 
 """
@@ -51,7 +47,7 @@ def IndexGet():
     last = data["reset"]
     page = data["page"]
     ver = version[page]
-    return render_template('index.html', alt=alt, nstart = nstart, doing=doing, com = com, idk=idk, url=get_girl(), tags=tags, status=status, last=last, tt=tt, page=page, ver=ver)
+    return render_template('index.html', alt=alt, nstart = nstart, doing=doing, com = com, idk=idk, tags=tags, status=status, last=last, tt=tt, page=page, ver=ver)
 
 def IndexPost(response):
     if 'reset' in response:
@@ -179,7 +175,7 @@ def update(id):
 @app.route('/deletetag/<int:id>')
 def deletetag(id):
     try:
-        tag = raww(f"SELECT * FROM Tasks t, TaskTags t2 WHERE t.TID = t2.TaskID AND t2.TagID == {id}")
+        tag = raww(f"SELECT * FROM TaskTags WHERE TagID == {id}")
         if len(tag) > 0:
             return error("Please ensure all tasks do not contain this tag")
         raw(f"DELETE FROM Tags WHERE TID = {id}")
