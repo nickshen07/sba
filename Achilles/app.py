@@ -122,8 +122,11 @@ def UpdateGet(id):
     status = raww("SELECT * FROM Statuses")
     tags = raww("SELECT * FROM Tags ORDER BY Name")
     tt = raww("SELECT * FROM TaskTags")
+    
+    # Data validation
     if len(item) == 0:
         return render_template('error.html', s="Task ID invalid")
+    
     item = item[0]
     return render_template('update.html', item=item, status=status, tags=tags,tt=tt)
 
