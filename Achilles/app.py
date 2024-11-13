@@ -194,11 +194,6 @@ def tags():
     else:
         return TagGet()
 
-@app.route('/reset')
-def resett():
-    reset()
-    return redirect('/')
-
 @app.errorhandler(HTTPException)
 def handleError(err):
     return error(str(err.code)+" "+err.name+" "+err.description)
