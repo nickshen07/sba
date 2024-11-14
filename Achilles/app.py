@@ -155,8 +155,6 @@ def index():
     else:
         return IndexGet()
 
-
-
 @app.route('/delete/<int:id>')
 def delete(id):
     query = f"DELETE FROM Tasks WHERE TID = {id}"

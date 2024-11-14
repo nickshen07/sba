@@ -211,3 +211,14 @@ textarea {
 button {
     height: 55%
 }
+
+.resizable-image {
+    max-width: 10%;
+    max-height: 10%;
+    display: block;
+    margin: auto;
+}
+
+div.ex1 {
+    padding-left: 50px;
+}
