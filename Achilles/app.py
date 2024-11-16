@@ -175,6 +175,8 @@ def update(id):
 
 @app.route('/deletetag/<int:id>')
 def deletetag(id):
+    if id < 3:
+        return redirect('/tags')
     try:
         tag = raww(f"SELECT * FROM TaskTags WHERE TagID == {id}")
         if len(tag) > 0:

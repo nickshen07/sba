@@ -9,7 +9,7 @@
 {% if alt != [] %}
 {% for i in alt %}
 <br />
-<div class="alert alert-warning alert-dismissible fade show" role="alert">
+<div class="alert alert-danger alert-dismissible fade show" role="alert">
     <strong>{{i[1]}} is due this week! [{{i[4]}}]</strong> Please check it.
     <button type="button" class="close" data-dismiss="alert" aria-label="Close">
         <span aria-hidden="true">&times;</span>
@@ -19,6 +19,7 @@
 {% endif %}
 
 <form action="/" method="POST">
+    <strong>Filter by status (press the button):</strong>
     <input type="submit" style="-webkit-text-fill-color: black; background-color:rgba(0, 255, 221, 0.254);" name="page"
         value="All">
     <input type="submit" style="-webkit-text-fill-color: black; background-color:rgba(0, 255, 204, 0.254);" name="page"
@@ -27,14 +28,15 @@
         value="On-going">
     <input type="submit" style="-webkit-text-fill-color: black; background-color:rgb(0, 255, 204, 0.254);" name="page"
         value="Completed">
-    <input type="submit" style="-webkit-text-fill-color: black; background-color:rgb(0, 255, 204, 0.254);" name="page"
-        value="I don't know">
+    <input type="submit" role="button" style="-webkit-text-fill-color: black; background-color:rgb(0, 255, 204, 0.254);"
+        name="page" value="I don't know">
 </form>
 
 <br />
 <br />
 
-<a href="/tags" class="btn btn-secondary btn-lg active" role="button" aria-pressed="true">Tags</a>
+<strong>Tag management page (press the button):</strong><a href="/tags"><button type="button"
+        class="btn btn-info">Tags</button></a>
 <br />
 <br />
 
@@ -205,17 +207,20 @@
     </div>
     {% endif %}
     <br />
-    <h2>Add Task</h2>
+    <br />
+    <h1 class="center">Add Task</h1>
     <div class="card g-4 ex1">
         <form action="/" method="POST">
             <h4>Name</h4>
             <div>
-                <input type="text" name="con" id="content" style="width: 85%; padding: .5em 1em;">
+                <input type="text" name="con" id="content" style="width: 85%; padding: .5em 1em;"
+                    placeholder="Enter the name of a task here">
             </div><br />
             <br />
             <h4>Details</h4>
             <div>
-                <a><textarea rows="9%" cols="85%" name="det" id="det"></textarea></a>
+                <a><textarea rows="9%" cols="85%" name="det" id="det"
+                        placeholder="Enter the details of a task here"></textarea></a>
             </div>
             <br />
             <h4>Tags</h4>
