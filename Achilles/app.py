@@ -178,7 +178,7 @@ def deletetag(id):
     if id < 3:
         return redirect('/tags')
     try:
-        tag = raww(f"SELECT * FROM TaskTags WHERE TagID == {id}")
+        tag = raww(f"SELECT * FROM TaskTags WHERE TagID = {id}")
         if len(tag) > 0:
             return error("Please ensure all tasks do not contain this tag")
         raw(f"DELETE FROM Tags WHERE TID = {id}")
